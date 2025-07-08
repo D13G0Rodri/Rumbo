@@ -1,80 +1,40 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-using UnityEngine.UI;
 
-public class TextoTemblorosoConSonido : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class TextoTembloroso : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public AudioClip clickClip;
-    public AudioClip seleccion;  // Nuevo sonido para OnPointerEnter
+    public float shakeMagnitude = 5f;
+    public float shakeSpeed = 30f;
 
-    private RectTransform rectTransform;
-    private Vector2 originalPosition;
-    private bool isShaking = false;
-    private Button button;
-    private AudioSource audioSource;
-    private bool hasPlayedSeleccionSound = false;
+    private Vector3 originalPosition;
+    private bool temblando = false;
+    private TextMeshProUGUI texto;
 
-    void Awake()
+    void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
-        originalPosition = rectTransform.anchoredPosition;
-        button = GetComponent<Button>();
+        originalPosition = transform.localPosition;
+        texto = GetComponent<TextMeshProUGUI>();
+    }
 
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.volume = 0.2f;
+    void Update()
+    {
+        if (temblando)
+        {
+            float x = Mathf.Sin(Time.time * shakeSpeed) * shakeMagnitude;
+            transform.localPosition = originalPosition + new Vector3(x, 0, 0);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        isShaking = true;
-        StartCoroutine(Temblar());
-
-        if (!hasPlayedSeleccionSound && seleccion != null)
-        {
-            audioSource.clip = seleccion;
-            audioSource.Play();
-            hasPlayedSeleccionSound = true;
-        }
+        temblando = true;
+        AudioManagerSFXMenu.Instance?.PlayHover();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        isShaking = false;
-        rectTransform.anchoredPosition = originalPosition;
-        hasPlayedSeleccionSound = false;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (clickClip != null)
-        {
-            GameObject tempAudio = new GameObject("TempAudio");
-            AudioSource tempSource = tempAudio.AddComponent<AudioSource>();
-            tempSource.clip = clickClip;
-            tempSource.volume = 0.8f;
-            tempSource.Play();
-
-            DontDestroyOnLoad(tempAudio);
-            Destroy(tempAudio, clickClip.length);
-        }
-
-        if (button != null)
-        {
-            button.onClick.Invoke();
-        }
-    }
-
-    System.Collections.IEnumerator Temblar()
-    {
-        while (isShaking)
-        {
-            float offsetX = Random.Range(-2f, 2f);
-            float offsetY = Random.Range(-2f, 2f);
-            rectTransform.anchoredPosition = originalPosition + new Vector2(offsetX, offsetY);
-            yield return new WaitForSeconds(0.02f);
-        }
-
-        rectTransform.anchoredPosition = originalPosition;
+        temblando = false;
+        transform.localPosition = originalPosition;
     }
 }
