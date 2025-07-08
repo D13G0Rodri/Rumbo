@@ -3,8 +3,6 @@ using UnityEngine.Audio;
 
 public class MenuOpciones : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
     [SerializeField] private AudioMixer audioMixer;
 
     public void PantallaCompleta(bool PantallaCompleta)
@@ -12,9 +10,14 @@ public class MenuOpciones : MonoBehaviour
         Screen.fullScreen = PantallaCompleta;
     }
 
-    public void CambiarVolumen(float volumen)
+    public void CambiarVolumenMusica(float volumen)
     {
-        audioMixer.SetFloat("Volumen", volumen);
+        audioMixer.SetFloat("VolumenMusica", Mathf.Log10(Mathf.Max(volumen, 0.001f)) * 20);
+    }
+
+    public void CambiarVolumenSFX(float volumen)
+    {
+        audioMixer.SetFloat("VolumenSFX", Mathf.Log10(Mathf.Max(volumen, 0.001f)) * 20);
     }
 
     public void CambiarCalidad(int index)
