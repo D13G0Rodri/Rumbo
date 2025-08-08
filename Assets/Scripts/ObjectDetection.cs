@@ -9,18 +9,19 @@ public class ObjectDetection : MonoBehaviour
 
     public RandomEvent randomEvent;// Asigna esto desde el Inspector de Unity
     public PlayerController playerController;
-    public TimerVida timerVida; 
+    public TimerVida timerVida;
+    public SceneAutoChanger sceneChanger;
     private bool isNearToDoor = false;
     private bool isNearToBed = false;
     void Start()
     {
         playerController = GetComponent<PlayerController>();
-        timerVida = GetComponent<TimerVida>();
+        timerVida =FindFirstObjectByType<TimerVida>();
 
         randomEvent = FindFirstObjectByType<RandomEvent>();
         panelDialogEnchufe.SetActive(false);
 
-
+        sceneChanger = FindFirstObjectByType<SceneAutoChanger>();
     }
 
     void OnTriggerEnter2D(Collider2D Collision)
@@ -55,6 +56,11 @@ public class ObjectDetection : MonoBehaviour
             Debug.Log("Está lejos de la puerta.");
             isNearToDoor = false;
         }
+        if (Collision.CompareTag("cuna"))
+        {
+            Debug.Log("Está cerca de la cuna");
+             isNearToBed = false;
+        }
     }
 
 
@@ -68,11 +74,11 @@ public class ObjectDetection : MonoBehaviour
 
         if (isNearToDoor == true && Input.GetKey(KeyCode.LeftControl))
         {
-            SceneManager.LoadScene("evento-raptado");
+            sceneChanger.CambiarEscena("evento-raptado");
         }
         if (isNearToBed == true && Input.GetKey(KeyCode.LeftControl) && timerVida.timerCount >= timerVida.maxTime)
         {
-            SceneManager.LoadScene("evento-raptado");
+            sceneChanger.CambiarEscena("bebe-niño");
         }
     }
 
