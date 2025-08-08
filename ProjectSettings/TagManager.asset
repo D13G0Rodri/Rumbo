@@ -12,6 +12,7 @@ TagManager:
   - barraTiempo
   - barraCaca
   - puerta
+  - cuna
   layers:
   - Default
   - TransparentFX

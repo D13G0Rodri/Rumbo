@@ -7,6 +7,7 @@ public class TimerVida : MonoBehaviour
     [SerializeField] public float maxTime = 1200f;
     private Image barraTiempo;
 
+    public GameObject panelTextToFinish;
     void Start()
     {
         GameObject objBarraTiempo = GameObject.FindWithTag("barraTiempo");
@@ -14,18 +15,27 @@ public class TimerVida : MonoBehaviour
         {
             barraTiempo = objBarraTiempo.GetComponent<Image>();
         }
-
+        if (panelTextToFinish)
+        {
+            Debug.Log("Se encontró el objeto");
+            panelTextToFinish.SetActive(false);
+        }
+        
     }
 
 
     void Update()
     {
-        timerCount += Time.deltaTime;
 
-        barraTiempo.fillAmount = timerCount / maxTime;
-        // Debug.Log(barraTiempo.fillAmount);
-        if (timerCount >= maxTime) { 
-            SceneManager.LoadScene("Etapa-Niño"); 
+        if (timerCount >= maxTime)
+        {
+            panelTextToFinish.SetActive(true);
+        }
+        else
+        {
+            timerCount += Time.deltaTime;
+            barraTiempo.fillAmount = timerCount / maxTime;
+            // Debug.Log(barraTiempo.fillAmount);
         }
     }
 }
