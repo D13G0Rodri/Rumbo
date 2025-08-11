@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      color tetero_0: -5991546259433195318
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

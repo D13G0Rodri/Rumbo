@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Video;
 
-public class Raptado : MonoBehaviour
+public class SaltarEscenaAMuerteCorrectamente : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
     public SceneAutoChanger sceneChanger;
