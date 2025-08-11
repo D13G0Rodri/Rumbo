@@ -13,6 +13,9 @@ public class ObjectDetection : MonoBehaviour
     public SceneAutoChanger sceneChanger;
     private bool isNearToDoor = false;
     private bool isNearToBed = false;
+    private bool isNearToBottle = false;
+
+    private bool isNearToBath = false;
     void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -41,25 +44,43 @@ public class ObjectDetection : MonoBehaviour
         if (Collision.CompareTag("cuna"))
         {
             Debug.Log("Está cerca de la cuna");
-             isNearToBed = true;
+            isNearToBed = true;
+        }
+        if (Collision.CompareTag("botella"))
+        {
+            isNearToBottle = true;
+        }
+        if (Collision.CompareTag("baño"))
+        {
+            isNearToBath = true;
         }
     }
     void OnTriggerExit2D(Collider2D Collision)
     {
         if (Collision.CompareTag("enchufe"))
         {
-            Debug.Log("Está lejos del enchufe.");
+            Debug.Log("Está LEJOS del enchufe.");
             panelDialogEnchufe.SetActive(false);
         }
         if (Collision.CompareTag("puerta"))
         {
-            Debug.Log("Está lejos de la puerta.");
+            Debug.Log("Está LEJOS de la puerta.");
             isNearToDoor = false;
         }
         if (Collision.CompareTag("cuna"))
         {
-            Debug.Log("Está cerca de la cuna");
-             isNearToBed = false;
+            Debug.Log("Está LEJOS de la cuna.");
+            isNearToBed = false;
+        }
+        if (Collision.CompareTag("botella"))
+        {
+            Debug.Log("Está LEJOS de la botella.");
+            isNearToBottle = false;
+        }
+        if (Collision.CompareTag("baño"))
+        {
+            Debug.Log("Está LEJOS del baño.");
+            isNearToBath = false;
         }
     }
 
@@ -79,6 +100,14 @@ public class ObjectDetection : MonoBehaviour
         if (isNearToBed == true && Input.GetKey(KeyCode.LeftControl) && timerVida.timerCount >= timerVida.maxTime)
         {
             sceneChanger.CambiarEscena("bebe-niño");
+        }
+        if (isNearToBottle == true && Input.GetKey(KeyCode.LeftControl))
+        {
+            sceneChanger.CambiarEscena("envenenado");
+        }
+        if (isNearToBath == true && Input.GetKey(KeyCode.LeftControl))
+        {
+            sceneChanger.CambiarEscena("ahogado");
         }
     }
 
