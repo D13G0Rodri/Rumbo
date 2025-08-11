@@ -21,14 +21,20 @@ EditorBuildSettings:
     path: Assets/Scenes/Muerte.unity
     guid: 59190f5a53e452745807903d6c029651
   - enabled: 1
-    path: "Assets/Scenes/Etapa-Ni\xF1o.unity"
-    guid: fc90c29ff08aeb14f8eca59afe01ed2c
-  - enabled: 1
     path: Assets/Scenes/Etapa-Bebe/eventos/raptado/evento-raptado.unity
     guid: ba4b9101a43a34b448f3d1f06b379718
   - enabled: 1
     path: "Assets/Scenes/CambioDeEtapas/bebe-ni\xF1o.unity"
     guid: 4a9a0660c74d1ae42a46e2951a205e6a
+  - enabled: 1
+    path: Assets/Scenes/Etapa-Bebe/eventos/ahogado/ahogado.unity
+    guid: ccf78fa0026fc364aa1274b616040d01
+  - enabled: 1
+    path: Assets/Scenes/Etapa-Bebe/eventos/envenenado/envenenado.unity
+    guid: 128de4af70d8c8a4183d02984ab51f90
+  - enabled: 1
+    path: "Assets/Scenes/Etapa-Ni\xF1o/Etapa-Ni\xF1o.unity"
+    guid: fc90c29ff08aeb14f8eca59afe01ed2c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

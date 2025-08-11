@@ -13,6 +13,8 @@ TagManager:
   - barraCaca
   - puerta
   - cuna
+  - botella
+  - "ba\xF1o"
   layers:
   - Default
   - TransparentFX
