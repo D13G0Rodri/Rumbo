@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ahogado_0: -2125190547152038306
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
