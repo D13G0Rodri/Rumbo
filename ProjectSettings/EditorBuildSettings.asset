@@ -6,34 +6,37 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MenuPrincipal.unity
+    path: "Assets/9_escenas_generales/Men\xFAPrincipal/MenuPrincipal.unity"
     guid: 5db53ae0810de2546882a9844772544d
   - enabled: 1
-    path: Assets/Scenes/JuegoNacer.unity
+    path: Assets/1_etapa_bebe/Scenes/JuegoNacer.unity
     guid: b8925d1106f9bfa4a870d26155d19e63
   - enabled: 1
-    path: Assets/Scenes/Etapa-Bebe/nacimiento.unity
+    path: Assets/1_etapa_bebe/Scenes/nacimiento.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 0
     path: Assets/Scenes/BebeGatea.unity
     guid: 3abba33ae2a471848b538c9dab389a00
   - enabled: 1
-    path: Assets/Scenes/Muerte.unity
+    path: Assets/1_etapa_bebe/Scenes/BebeGatea.unity
+    guid: 75c6038fd3bd9c547b47b9bc75a7ebf9
+  - enabled: 1
+    path: Assets/9_escenas_generales/muerte/Muerte.unity
     guid: 59190f5a53e452745807903d6c029651
   - enabled: 1
-    path: Assets/Scenes/Etapa-Bebe/eventos/raptado/evento-raptado.unity
+    path: Assets/1_etapa_bebe/Scenes/eventos/raptado/evento-raptado.unity
     guid: ba4b9101a43a34b448f3d1f06b379718
   - enabled: 1
-    path: "Assets/Scenes/CambioDeEtapas/bebe-ni\xF1o.unity"
+    path: "Assets/9_escenas_generales/CambioDeEtapas/bebe-ni\xF1o.unity"
     guid: 4a9a0660c74d1ae42a46e2951a205e6a
   - enabled: 1
-    path: Assets/Scenes/Etapa-Bebe/eventos/ahogado/ahogado.unity
+    path: Assets/1_etapa_bebe/Scenes/eventos/ahogado/ahogado.unity
     guid: ccf78fa0026fc364aa1274b616040d01
   - enabled: 1
-    path: Assets/Scenes/Etapa-Bebe/eventos/envenenado/envenenado.unity
+    path: Assets/1_etapa_bebe/Scenes/eventos/envenenado/envenenado.unity
     guid: 128de4af70d8c8a4183d02984ab51f90
   - enabled: 1
-    path: "Assets/Scenes/Etapa-Ni\xF1o/Etapa-Ni\xF1o.unity"
+    path: "Assets/2_etapa_ni\xF1o/Scenes/Etapa-Ni\xF1o.unity"
     guid: fc90c29ff08aeb14f8eca59afe01ed2c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
