@@ -8891,9 +8891,9 @@ GameObject:
   - component: {fileID: 998292327}
   - component: {fileID: 998292330}
   - component: {fileID: 998292331}
-  - component: {fileID: 998292332}
   - component: {fileID: 998292333}
   - component: {fileID: 998292334}
+  - component: {fileID: 998292335}
   m_Layer: 0
   m_Name: "Beb\xE9"
   m_TagString: Untagged
@@ -9066,26 +9066,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &998292332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998292326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2642bc9f370a548995012f3bc87c45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameOverImage: {fileID: 0}
-  speed: 5
-  jumpForce: 3
-  health: 6
-  isGrounded: 0
-  animator: {fileID: 998292331}
-  damageCooldown: 1
-  danioPorCiclo: 0.1
 --- !u!114 &998292333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9116,9 +9096,31 @@ MonoBehaviour:
   panelDialogEnchufe: {fileID: 2024010066}
   animator: {fileID: 998292331}
   randomEvent: {fileID: 998292333}
-  playerController: {fileID: 998292332}
+  playerController: {fileID: 0}
   timerVida: {fileID: 553262406}
   sceneChanger: {fileID: 1461526589}
+--- !u!114 &998292335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998292326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2642bc9f370a548995012f3bc87c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  jumpForce: 3
+  health: 6
+  damageCooldown: 1
+  gameOverImage: {fileID: 0}
+  intelligence: 50
+  concentration: 50
+  hunger: 100
+  bathroom: 100
+  danioPorCiclo: 0.1
 --- !u!1 &1047397655
 GameObject:
   m_ObjectHideFlags: 0

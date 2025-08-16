@@ -29,6 +29,9 @@ public class TimerVida : MonoBehaviour
 
         if (timerCount >= maxTime)
         {
+            PlayerControllerBase player = FindFirstObjectByType<PlayerControllerBase>();
+            if (player != null)
+                player.SaveGame();
             panelTextToFinish.SetActive(true);
         }
         else

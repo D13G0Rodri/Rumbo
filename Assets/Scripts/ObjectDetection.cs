@@ -8,7 +8,7 @@ public class ObjectDetection : MonoBehaviour
     public Animator animator;
 
     public RandomEvent randomEvent;// Asigna esto desde el Inspector de Unity
-    public PlayerController playerController;
+    public PlayerControllerBaby playerController;
     public TimerVida timerVida;
     public SceneAutoChanger sceneChanger;
     private bool isNearToDoor = false;
@@ -18,7 +18,7 @@ public class ObjectDetection : MonoBehaviour
     private bool isNearToBath = false;
     void Start()
     {
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerControllerBaby>();
         timerVida =FindFirstObjectByType<TimerVida>();
 
         randomEvent = FindFirstObjectByType<RandomEvent>();

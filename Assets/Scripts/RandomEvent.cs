@@ -17,7 +17,7 @@ public class RandomEvent : MonoBehaviour
 
     // === REFERENCIAS INTERNAS ===
     private Animator animator;
-    private PlayerController playerController;
+    private PlayerControllerBaby playerController;
 
     private Image barraVidaImage;
     private Image barraCaca;
@@ -33,7 +33,7 @@ public class RandomEvent : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerControllerBaby>();
 
         // Buscar y asignar la barra de caca
         GameObject objBarraCaca = GameObject.FindWithTag("barraCaca");
