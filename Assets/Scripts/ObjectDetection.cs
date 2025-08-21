@@ -85,6 +85,8 @@ public class ObjectDetection : MonoBehaviour
     }
 
 
+    private bool hasTransitioned = false;
+
     void Update()
     {
         if (panelDialogEnchufe.activeSelf && Input.GetKey(KeyCode.LeftControl))
@@ -97,8 +99,15 @@ public class ObjectDetection : MonoBehaviour
         {
             sceneChanger.CambiarEscena("evento-raptado");
         }
-        if (isNearToBed == true && Input.GetKey(KeyCode.LeftControl) && timerVida.timerCount >= timerVida.maxTime)
+        if (!hasTransitioned && isNearToBed == true && Input.GetKey(KeyCode.LeftControl) && timerVida.timerCount >= timerVida.maxTime)
         {
+            // Guardar explícitamente antes de pasar al video intermedio
+            if (playerController != null)
+            {
+                playerController.SaveGame();
+                Debug.Log("Guardado antes de cambiar a la escena de video 'bebe-niño'.");
+            }
+            hasTransitioned = true;
             sceneChanger.CambiarEscena("bebe-niño");
         }
         if (isNearToBottle == true && Input.GetKey(KeyCode.LeftControl))

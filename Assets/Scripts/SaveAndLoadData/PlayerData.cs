@@ -1,22 +1,24 @@
 using System;
-using UnityEngine;
 
 [Serializable]
 public class PlayerData
 {
+    // Datos Comunes
     public float health;
-    public float[] position; // x, y, z
+    public float[] position;
     public float intelligence;
     public float concentration;
     public float hunger;
     public float bathroom;
     public string currentSceneName;
-    public float timerCount; // Para el bebé
-    public float energy; // Para el niño
-    public float happiness; // Para el adolescente
+    public float timerCount;
 
-    public PlayerData()
-    {
-        position = new float[3];
-    }
+    // --- CAMBIO: Añadir campos para cada etapa ---
+    // Si una etapa no usa un campo, simplemente se quedará con su valor por defecto (0).
+    
+    // Datos del Niño
+    public float energy;
+
+    // Datos del Adolescente
+    public float happiness;
 }

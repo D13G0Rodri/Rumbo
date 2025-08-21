@@ -1,18 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PlayerControllerBaby : PlayerControllerBase
 {
-    [Header("Configuración Bebé")]
-    public float danioPorCiclo = 0.1f;
-    private bool animationDead = false;
+    // No necesitamos re-declarar danioPorCiclo aquí si el daño lo gestiona el evento.
 
     protected override void Start()
     {
-        PlayerControllerBase player = FindFirstObjectByType<PlayerControllerBase>();
-        if (player != null)
-            player.LoadGame();
+        // CAMBIO: Eliminamos la llamada duplicada a LoadGame.
+        // base.Start() se encargará de todo el proceso de inicialización y carga.
         base.Start();
     }
 
@@ -22,7 +18,6 @@ public class PlayerControllerBaby : PlayerControllerBase
         Cry();
     }
 
-    // Llanto del bebé
     private void Cry()
     {
         if (Input.GetKeyDown(KeyCode.L))
@@ -31,56 +26,42 @@ public class PlayerControllerBaby : PlayerControllerBase
             animator.SetBool("isCrying", false);
     }
 
-    // Daño por falta de limpieza
-    public void DañoPorNoLimpiar()
+    // CAMBIO: Esta función ahora recibe el daño como parámetro.
+    // El evento es quien decide cuánto daño hacer.
+    public void DañoPorNoLimpiar(float damageAmount)
     {
-        if (barraVidaImage != null)
-        {
-            health -= danioPorCiclo;
-            barraVidaImage.fillAmount = health / VidaMax;
-            Debug.Log($"¡Daño por falta de limpieza! Vida: {health}");
-            if (health <= 0)
-                Dead();
-        }
+        ReceiveDamage(damageAmount); // Reutilizamos la función de daño base.
+        Debug.Log($"¡Daño por falta de limpieza! Vida: {health}");
+    }
+    public void ModificateState()
+    {
+        animator.SetBool("isElectrocuted", false);
     }
 
-    // Animación de "hacer popó"
-    public void hacerLaPopo()
-    {
-        int numCagar = 2;
-        int numeroAleatorio = Random.Range(1, 10);
-        if (numCagar == numeroAleatorio)
-            animator.SetTrigger("hacerPopo");
-    }
 
-    // Sobrescribe Dead para mensaje específico
-    protected override void Dead()
-    {
-        animator.SetBool("isDead", true);
-        Debug.Log("¡El bebé ha muerto por falta de cuidados!");
-        SceneManager.LoadScene("Muerte");
-    }
 
-    public override void SaveGame()
-    {
-        TimerVida timer = FindFirstObjectByType<TimerVida>();
-        PlayerData data = new PlayerData
-        {
-            health = health,
-            position = new float[] { transform.position.x, transform.position.y, transform.position.z },
-            intelligence = intelligence,
-            concentration = concentration,
-            hunger = hunger,
-            bathroom = bathroom,
-            timerCount = timer != null ? timer.timerCount : 0f, // Guarda el tiempo del bebé
-            currentSceneName = "Etapa-Niño" // Próxima escena
-        };
-        SaveSystem.SavePlayerData(data);
-    }
 
-    public override void LoadGame()
+    // CAMBIO: Sobrescribimos el método para crear datos, en lugar de todo el SaveGame.
+    protected override PlayerData CreatePlayerData()
     {
-        base.LoadGame(); // Carga los datos comunes
-    }
+        // Obtenemos los datos base (vida, posición, etc.)
+        PlayerData data = base.CreatePlayerData();
 
+        // Modificamos solo lo que es específico del bebé al pasar de etapa
+        data.currentSceneName = "Etapa-Niño"; // Próxima escena
+
+        return data;
+    }
+    
+    // CAMBIO: Ahora LoadGame recibe el PlayerData del base.LoadGame()
+    public override PlayerData LoadGame()
+    {
+        // Llamamos a la implementación base para cargar los datos comunes
+        PlayerData data = base.LoadGame(); 
+        
+        // No necesitamos cargar nada específico aquí, ya que el bebé no tiene campos únicos en el guardado.
+        // Pero mantenemos el override por si acaso en el futuro se añaden.
+        
+        return data; // Devolvemos el mismo objeto data para mantener la cadena (aunque no sea estrictamente necesario aquí)
+    }
 }

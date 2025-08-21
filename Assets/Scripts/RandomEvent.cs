@@ -13,7 +13,7 @@ public class RandomEvent : MonoBehaviour
     public float tiempoLimiteLimpieza = 20f;
 
     [Tooltip("Cantidad de daño por ciclo (0-1)")]
-    [Range(0, 1)] public float danioPorCiclo = 0.1f;
+    [Range(0, 1)] public float danioPorCiclo = 1f;
 
     // === REFERENCIAS INTERNAS ===
     private Animator animator;
@@ -82,7 +82,7 @@ public class RandomEvent : MonoBehaviour
             if (contadorIncomodidad >= tiempoLimiteLimpieza)
             {
                 contadorIncomodidad = 0f;
-                playerController.DañoPorNoLimpiar();
+                playerController.DañoPorNoLimpiar(danioPorCiclo);
             }
         }
     }
