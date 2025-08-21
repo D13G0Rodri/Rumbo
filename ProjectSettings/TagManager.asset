@@ -15,6 +15,7 @@ TagManager:
   - cuna
   - botella
   - "ba\xF1o"
+  - ChildSpawn
   layers:
   - Default
   - TransparentFX
