@@ -16,6 +16,8 @@ TagManager:
   - botella
   - "ba\xF1o"
   - ChildSpawn
+  - Ladron
+  - Obj_TV
   layers:
   - Default
   - TransparentFX
