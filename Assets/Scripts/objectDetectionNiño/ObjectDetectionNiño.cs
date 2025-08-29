@@ -8,7 +8,7 @@ public class ObjectDetectionNiño : MonoBehaviour
     // public Animator animator;
     // public RandomEvent randomEvent;// Asigna esto desde el Inspector de Unity
     // public PlayerControllerBaby playerController;
-    // public SceneAutoChanger sceneChanger;
+    public SceneAutoChanger sceneChanger;
 
     private bool isNearToThief = false;
     private bool isNearToTV = false;
@@ -27,7 +27,7 @@ public class ObjectDetectionNiño : MonoBehaviour
         panelDialogLadron.SetActive(false);
         panelDialogTv.SetActive(false);
 
-        // sceneChanger = FindFirstObjectByType<SceneAutoChanger>();
+        sceneChanger = FindFirstObjectByType<SceneAutoChanger>();
     }
 
     void OnTriggerEnter2D(Collider2D Collision)
@@ -67,7 +67,7 @@ public class ObjectDetectionNiño : MonoBehaviour
         }
         if (isNearToTV == true && Input.GetKey(KeyCode.LeftControl))
         {
-            
+            sceneChanger.CambiarEscena("videoGame");
         }
     }
 
