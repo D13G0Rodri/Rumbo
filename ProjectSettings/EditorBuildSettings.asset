@@ -38,6 +38,9 @@ EditorBuildSettings:
   - enabled: 1
     path: "Assets/2_etapa_ni\xF1o/Scenes/Etapa-Ni\xF1o.unity"
     guid: fc90c29ff08aeb14f8eca59afe01ed2c
+  - enabled: 1
+    path: "Assets/2_etapa_ni\xF1o/images/objects/tv/videoGame.unity"
+    guid: 02d074221e0993a439299d86cd0ddd00
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

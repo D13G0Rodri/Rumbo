@@ -1,24 +1,66 @@
+# Unity — cachés y artefactos que NO deben versionarse
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
-[Ll]ogs
-[Mm]emoryCaptures
-sysinfo.txt
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+[Ss]ysinfo.txt
+
+# IMPORTANTE: Unity necesita los archivos .meta para mantener GUIDs estables
+# No agregar regla para *.meta (DEBEN permanecer bajo control de versiones)
+
+# IDEs y herramientas
+.vs/
+.vscode/
+.idea/
 *.csproj
 *.sln
+*.suo
 *.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.sln.iml
 
-# Archivos personales del editor Unity (layouts, settings, etc.)
-UserSettings/
-*.dwlt
-*.layout
-*.prefs
-
-# Visual Studio Code
-.vscode/
-
-# Otros archivos ocultos o inútiles
+# macOS / Windows
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Paquetes/compilaciones exportadas
+*.apk
+*.aab
+*.unitypackage
+
+# iOS / Xcode
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcuserstate
+*.xcuserdata/
+*.xccheckout
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+DerivedData/
+
+# Android / Gradle
+.gradle/
+*.gradle
+
+# Plastic SCM (si llegas a usarlo)
+.plastic/
+
+# Logs generales y reports
+*.log
+CrashReports/
+
+# Asset Store Tools
+Assets/AssetStoreTools*

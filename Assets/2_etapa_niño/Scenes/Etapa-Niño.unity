@@ -34415,6 +34415,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &211319042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211319044}
+  - component: {fileID: 211319043}
+  m_Layer: 0
+  m_Name: carga-Scripts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &211319043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211319042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 851cb85365957ca4bb91fff7ab2757fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiempoDeEspera: 15
+--- !u!4 &211319044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211319042}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 131.54712, y: 243.11708, z: -4.8093824}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226066259
 GameObject:
   m_ObjectHideFlags: 0
@@ -35496,6 +35541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4464925eeb0e08647bab69ebe637e186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneChanger: {fileID: 0}
   panelDialogLadron: {fileID: 1995014060}
   panelDialogTv: {fileID: 1913408750}
 --- !u!1 &557528488
@@ -37989,7 +38035,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1567534979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bfd67c19c1a3944291d36226f48dfdd, type: 3}
+  m_Script: {fileID: 11500000, guid: 0420ab0b7b469e341bc6ed62903b5d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadCamara: 0.025
@@ -40010,3 +40056,4 @@ SceneRoots:
   - {fileID: 1381783236}
   - {fileID: 421291854}
   - {fileID: 1341652451}
+  - {fileID: 211319044}
