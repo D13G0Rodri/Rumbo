@@ -14,23 +14,27 @@ public class PlayerControllerBase : MonoBehaviour
     [Header("Configuración Básica")]
     public float speed = 5f;
     public float jumpForce = 3f;
-    public float VidaMax = 6f; // CAMBIO: VidaMax es ahora un valor fijo, no depende del 'health' inicial.
+    public float VidaMax = 6f;
     public float damageCooldown = 1f;
     public GameObject gameOverImage;
 
     // --- Estado del Jugador ---
     [Header("Estados")]
-    public float health; // CAMBIO: Separado de VidaMax para claridad.
+    public float health;
     public float intelligence = 50f;
     public float concentration = 50f;
-    public float hunger = 100f;
-    public float bathroom = 100f;
-    public float timerCount; // CAMBIO: El jugador es el "dueño" de este dato.
+    public float hunger = 100f;   // empieza en 100
+    public float bathroom = 0f;   // empieza en 0 (nivel caca)
+    public float timerCount;
 
     protected bool isReceivingDamage;
     protected bool isGrounded;
-    
-    // CAMBIO: Usamos Awake para obtener componentes. Es lo primero que se ejecuta.
+
+    public float velocidadCargaCaca = 5f;
+
+    // Nuevo: evento para notificar cuando los datos han sido cargados
+    public static event Action<PlayerData> OnGameDataLoaded;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,25 +46,37 @@ public class PlayerControllerBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        // CAMBIO: La carga de datos ahora es lo primero que hacemos.
-        LoadGame();
-        
-        // CAMBIO: La vida inicial se establece aquí. Si no hay datos guardados, será VidaMax.
-        health = (health > 0) ? health : VidaMax;
-        UpdateHealthUI(); // Actualizamos la UI después de establecer la vida.
+        // Intentar cargar partida
+        PlayerData loaded = LoadGame();
 
+        if (loaded == null)
+        {
+            // no había datos guardados: valores por defecto
+            health = VidaMax;
+            hunger = 100f;
+            bathroom = 0f;
+            timerCount = 0f;
+        }
+        else
+        {
+            // health ya fue asignada en LoadGame; si por alguna razón es <=0, asignamos VidaMax
+            if (health <= 0) health = VidaMax;
+        }
+
+        UpdateHealthUI();
         isGrounded = true;
 
-        Debug.Log($"Datos cargados: \n Tiempo de vida={timerCount} \nVida: {health}");
+        Debug.Log($"Datos iniciales: Tiempo={timerCount} Vida={health} Hunger={hunger} Bathroom={bathroom}");
     }
 
     protected virtual void Update()
     {
         HandleMovement();
         HandleJump();
+        UpdateHunger();
+        UpdateBathroom();
     }
 
-    // --- Movimiento y Acciones ---
     protected virtual void HandleMovement()
     {
         float movimiento = Input.GetAxisRaw("Horizontal");
@@ -79,7 +95,6 @@ public class PlayerControllerBase : MonoBehaviour
         }
     }
 
-    // --- Lógica de Vida y Daño ---
     public virtual void ReceiveDamage(float damage)
     {
         if (!isReceivingDamage)
@@ -94,13 +109,12 @@ public class PlayerControllerBase : MonoBehaviour
             Invoke(nameof(ResetDamage), damageCooldown);
         }
     }
-    
-    // CAMBIO: Función separada para actualizar la UI, para no repetir código.
+
     public void UpdateHealthUI()
     {
-        if (barraVidaImage != null)
+        if (barraVidaImage != null && VidaMax > 0)
         {
-            barraVidaImage.fillAmount = health / VidaMax;
+            barraVidaImage.fillAmount = Mathf.Clamp01(health / VidaMax);
         }
     }
 
@@ -112,7 +126,6 @@ public class PlayerControllerBase : MonoBehaviour
             Debug.Log("¡El personaje ha muerto!");
             SceneManager.LoadScene("Muerte");
         }
-        
     }
 
     protected virtual void ResetDamage()
@@ -121,7 +134,6 @@ public class PlayerControllerBase : MonoBehaviour
         animator.SetBool("isElectrocuted", false);
     }
 
-    // --- Colisiones ---
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Piso"))
@@ -137,12 +149,8 @@ public class PlayerControllerBase : MonoBehaviour
             isGrounded = false;
     }
 
-    // --- Sistema de Guardado y Carga ---
+    // --- Guardado / Carga ---
 
-    // Nuevo: evento para notificar cuando los datos han sido cargados
-    public static event Action<PlayerData> OnGameDataLoaded;
-    
-    // CAMBIO: Se crea un método virtual para que las clases hijas lo extiendan.
     protected virtual PlayerData CreatePlayerData()
     {
         TimerVida timerVida = FindFirstObjectByType<TimerVida>();
@@ -155,8 +163,7 @@ public class PlayerControllerBase : MonoBehaviour
             hunger = this.hunger,
             bathroom = this.bathroom,
             currentSceneName = SceneManager.GetActiveScene().name,
-            // CAMBIO: Obtenemos el tiempo directamente del timer para asegurar que es el actual.
-            timerCount = (timerVida != null) ? timerVida.timerCount : this.timerCount 
+            timerCount = (timerVida != null) ? timerVida.timerCount : this.timerCount
         };
     }
 
@@ -164,16 +171,14 @@ public class PlayerControllerBase : MonoBehaviour
     {
         PlayerData data = CreatePlayerData();
         SaveSystem.SavePlayerData(data);
+        Debug.Log("SaveGame() ejecutado.");
     }
 
-    // CAMBIO: Ahora LoadGame devuelve un objeto PlayerData.
-    // También es virtual para poder ser sobrescrito.
     public virtual PlayerData LoadGame()
     {
         PlayerData data = SaveSystem.LoadPlayerData();
         if (data != null)
         {
-            // Aplicamos los datos comunes del PlayerControllerBase
             health = data.health;
             transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
             intelligence = data.intelligence;
@@ -182,13 +187,23 @@ public class PlayerControllerBase : MonoBehaviour
             bathroom = data.bathroom;
             timerCount = data.timerCount;
 
-            // Notificamos a quien esté interesado (por ejemplo, TimerVida)
             OnGameDataLoaded?.Invoke(data);
-
-            // Retornamos el objeto data para que las clases derivadas puedan usarlo
+            Debug.Log("LoadGame() cargó datos.");
             return data;
         }
-        // Si no hay datos guardados, o si el archivo está vacío, retornamos null
-        return null; 
+        return null;
+    }
+
+    void UpdateHunger()
+    {
+        hunger -= Time.deltaTime * 0.1f; // ajustable
+        if (hunger < 0) hunger = 0f;
+    }
+
+    void UpdateBathroom()
+    {
+        // aumentamos nivel de caca con el tiempo (0 -> 100)
+        bathroom += Time.deltaTime * velocidadCargaCaca; // ajusta velocidad en inspector si quieres
+        if (bathroom > 100f) bathroom = 100f;
     }
 }
