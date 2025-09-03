@@ -15,10 +15,11 @@ public class PlayerData
 
     // --- CAMBIO: Añadir campos para cada etapa ---
     // Si una etapa no usa un campo, simplemente se quedará con su valor por defecto (0).
-    
+
     // Datos del Niño
     public float energy;
 
     // Datos del Adolescente
     public float happiness;
 }
+

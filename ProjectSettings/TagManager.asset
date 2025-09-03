@@ -18,6 +18,7 @@ TagManager:
   - ChildSpawn
   - Ladron
   - Obj_TV
+  - barraComida
   layers:
   - Default
   - TransparentFX
