@@ -7,7 +7,6 @@ public class ObjectDetection : MonoBehaviour
     public GameObject panelDialogEnchufe;
     public Animator animator;
 
-    public RandomEvent randomEvent;// Asigna esto desde el Inspector de Unity
     public PlayerControllerBaby playerController;
     public TimerVida timerVida;
     public SceneAutoChanger sceneChanger;
@@ -21,7 +20,7 @@ public class ObjectDetection : MonoBehaviour
         playerController = GetComponent<PlayerControllerBaby>();
         timerVida =FindFirstObjectByType<TimerVida>();
 
-        randomEvent = FindFirstObjectByType<RandomEvent>();
+
         panelDialogEnchufe.SetActive(false);
 
         sceneChanger = FindFirstObjectByType<SceneAutoChanger>();

@@ -4,27 +4,22 @@ using UnityEngine.SceneManagement;
 public class PlayerControllerChild : PlayerControllerBase
 {
     [Header("Configuración Niño")]
-    public float energy = 100f; // Valor inicial por si no hay datos guardados.
+    public float energy = 100f;
     public float learnRate = 0.5f;
     
     protected override void Start()
     {
-        // Primero cargamos datos con la base para tener stats actualizados.
         base.Start();
 
-        // Luego forzamos la aparición en un punto de spawn propio de la escena del niño.
-        // Busca un GameObject con tag "ChildSpawn" y usa su posición.
         var spawn = GameObject.FindWithTag("ChildSpawn");
         if (spawn != null)
         {
             transform.position = spawn.transform.position;
-            // Actualiza también la posición en memoria para futuros guardados.
-            // No guardamos inmediatamente para no sobreescribir si estás probando.
             Debug.Log($"Spawn Niño aplicado en: {transform.position}");
         }
         else
         {
-            Debug.LogWarning("No se encontró un objeto con tag 'ChildSpawn' en la escena del niño. El personaje puede caer al vacío si la posición guardada no es válida.");
+            Debug.LogWarning("No se encontró un objeto con tag 'ChildSpawn' en la escena del niño.");
         }
     }
     
@@ -44,47 +39,46 @@ public class PlayerControllerChild : PlayerControllerBase
         }
     }
 
-    // Sobrescribimos el método para que al recibir daño, también baje la energía.
     public override void ReceiveDamage(float damage)
     {
-        // Llamamos a la lógica base para que se encargue de la vida, cooldown, etc.
         base.ReceiveDamage(damage);
-
-        // Añadimos nuestra lógica específica de esta clase.
-        if (!isReceivingDamage) // Solo aplicamos esto si el daño fue procesado (para respetar el cooldown)
+        if (!isReceivingDamage)
         {
              energy -= damage * 2f;
         }
     }
 
-    // CAMBIO: Sobrescribimos CreatePlayerData para añadir la energía.
+    // --- SISTEMA DE GUARDADO Y CARGA (NUEVO MÉTODO) ---
+
+    /// <summary>
+    /// Sobrescribimos este método para añadir los datos específicos del niño (energía).
+    /// La clase base (PlayerControllerBase) se encarga de llamar a este método 
+    /// tanto al guardar como al cargar.
+    /// </summary>
+    protected override void AddStageSpecificData(PlayerData data)
+    {
+        // Al guardar, esto añade la energía al paquete de datos.
+        data.energy = this.energy;
+
+        // Al cargar, esto recupera la energía del paquete de datos.
+        this.energy = data.energy;
+    }
+
+    /// <summary>
+    /// Sobrescribimos este método SOLO para definir la escena de la siguiente etapa.
+    /// La lógica de añadir los datos ya está centralizada en AddStageSpecificData.
+    /// </summary>
     protected override PlayerData CreatePlayerData()
     {
-        // 1. Obtenemos el objeto de datos con toda la información base.
+        // 1. Llama a la base para que cree el paquete de datos y añada la energía (vía AddStageSpecificData).
         PlayerData data = base.CreatePlayerData();
 
-        // 2. Añadimos la información específica del niño.
-        data.energy = this.energy;
-        data.currentSceneName = "Etapa-Adolescente"; // Escena a la que irá después
+        // 2. Define cuál es la siguiente escena para la transición.
+        data.currentSceneName = "Etapa-Adolescente";
 
-        // 3. Devolvemos el objeto completo.
         return data;
     }
 
-    // CAMBIO: Sobrescribimos LoadGame para cargar la energía.
-     // CAMBIO: Ahora LoadGame recibe el PlayerData del base.LoadGame()
-    public override PlayerData LoadGame()
-    {
-        // 1. Llamamos a la implementación base para cargar los datos comunes.
-        //    'data' es el objeto que contiene TODOS los datos del archivo.
-        PlayerData data = base.LoadGame(); 
-        
-        // 2. Si hay datos, aplicamos los específicos de esta clase.
-        if (data != null)
-        {
-            energy = data.energy; // Cargamos la energía del niño
-        }
-
-        return data; // Retornamos el objeto data por si alguna clase hija de Child lo necesitara.
-    }
+    // No es necesario sobrescribir LoadGame nunca más, la base ya lo gestiona todo.
+    // Tampoco es necesario tener un SaveCheckpoint aquí, ya está en la base.
 }

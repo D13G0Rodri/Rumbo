@@ -23,8 +23,8 @@ public class PlayerControllerBase : MonoBehaviour
     public float health;
     public float intelligence = 50f;
     public float concentration = 50f;
-    public float hunger = 100f;   // empieza en 100
-    public float bathroom = 0f;   // empieza en 0 (nivel caca)
+    public float hunger = 100f;
+    public float bathroom = 0f;
     public float timerCount;
 
     protected bool isReceivingDamage;
@@ -32,7 +32,6 @@ public class PlayerControllerBase : MonoBehaviour
 
     public float velocidadCargaCaca = 5f;
 
-    // Nuevo: evento para notificar cuando los datos han sido cargados
     public static event Action<PlayerData> OnGameDataLoaded;
 
     protected virtual void Awake()
@@ -46,12 +45,9 @@ public class PlayerControllerBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        // Intentar cargar partida
         PlayerData loaded = LoadGame();
-
         if (loaded == null)
         {
-            // no había datos guardados: valores por defecto
             health = VidaMax;
             hunger = 100f;
             bathroom = 0f;
@@ -59,13 +55,10 @@ public class PlayerControllerBase : MonoBehaviour
         }
         else
         {
-            // health ya fue asignada en LoadGame; si por alguna razón es <=0, asignamos VidaMax
             if (health <= 0) health = VidaMax;
         }
-
         UpdateHealthUI();
         isGrounded = true;
-
         Debug.Log($"Datos iniciales: Tiempo={timerCount} Vida={health} Hunger={hunger} Bathroom={bathroom}");
     }
 
@@ -102,10 +95,8 @@ public class PlayerControllerBase : MonoBehaviour
             isReceivingDamage = true;
             health -= damage;
             UpdateHealthUI();
-
             if (health <= 0)
                 animator.SetBool("isDead", true);
-
             Invoke(nameof(ResetDamage), damageCooldown);
         }
     }
@@ -149,12 +140,36 @@ public class PlayerControllerBase : MonoBehaviour
             isGrounded = false;
     }
 
-    // --- Guardado / Carga ---
+    // --- SISTEMA DE GUARDADO Y CARGA (REFACTORIZADO) ---
 
-    protected virtual PlayerData CreatePlayerData()
+    /// <summary>
+    /// NUEVO: Método virtual para que las clases hijas añadan sus datos específicos.
+    /// En la clase base, este método no hace nada.
+    /// </summary>
+    protected virtual void AddStageSpecificData(PlayerData data)
     {
-        TimerVida timerVida = FindFirstObjectByType<TimerVida>();
-        return new PlayerData
+        // Las clases hijas (Child, Teen) sobrescribirán este método.
+    }
+
+    /// <summary>
+    /// MÉTODO PRINCIPAL PARA GUARDADO DE TRANSICIÓN DE ETAPA.
+    /// Llama a este método cuando quieras pasar a la siguiente etapa.
+    /// </summary>
+    public void SaveGame()
+    {
+        PlayerData data = CreatePlayerData();
+        SaveSystem.SavePlayerData(data);
+        Debug.Log("SaveGame() para transición de etapa ejecutado.");
+    }
+
+    /// <summary>
+    /// MÉTODO PRINCIPAL PARA GUARDADO DE CHECKPOINT.
+    /// Llama a este método cuando quieras guardar el progreso DENTRO de una etapa.
+    /// </summary>
+    public void SaveCheckpoint()
+    {
+        // 1. Crea el contenedor de datos base (con el nombre de la escena actual).
+        PlayerData data = new PlayerData
         {
             health = this.health,
             position = new float[] { transform.position.x, transform.position.y, transform.position.z },
@@ -163,22 +178,50 @@ public class PlayerControllerBase : MonoBehaviour
             hunger = this.hunger,
             bathroom = this.bathroom,
             currentSceneName = SceneManager.GetActiveScene().name,
-            timerCount = (timerVida != null) ? timerVida.timerCount : this.timerCount
+            timerCount = (FindFirstObjectByType<TimerVida>() != null) ? FindFirstObjectByType<TimerVida>().timerCount : this.timerCount
         };
-    }
 
-    public void SaveGame()
-    {
-        PlayerData data = CreatePlayerData();
+        // 2. Pide a la clase hija que añada sus datos específicos (energía, felicidad, etc.).
+        AddStageSpecificData(data);
+
+        // 3. Guarda el archivo.
         SaveSystem.SavePlayerData(data);
-        Debug.Log("SaveGame() ejecutado.");
+        Debug.Log("SaveCheckpoint() ejecutado para la escena: " + data.currentSceneName);
     }
 
+    /// <summary>
+    /// Crea el contenedor de datos para una TRANSICIÓN.
+    /// Las clases hijas lo sobrescriben para definir la PRÓXIMA escena.
+    /// </summary>
+    protected virtual PlayerData CreatePlayerData()
+    {
+        PlayerData data = new PlayerData
+        {
+            health = this.health,
+            position = new float[] { transform.position.x, transform.position.y, transform.position.z },
+            intelligence = this.intelligence,
+            concentration = this.concentration,
+            hunger = this.hunger,
+            bathroom = this.bathroom,
+            currentSceneName = SceneManager.GetActiveScene().name,
+            timerCount = (FindFirstObjectByType<TimerVida>() != null) ? FindFirstObjectByType<TimerVida>().timerCount : this.timerCount
+        };
+        
+        // Pide a la clase hija que añada sus datos.
+        AddStageSpecificData(data);
+
+        return data;
+    }
+
+    /// <summary>
+    /// Carga los datos del archivo y los aplica al estado del jugador.
+    /// </summary>
     public virtual PlayerData LoadGame()
     {
         PlayerData data = SaveSystem.LoadPlayerData();
         if (data != null)
         {
+            // Carga los datos base
             health = data.health;
             transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
             intelligence = data.intelligence;
@@ -186,6 +229,9 @@ public class PlayerControllerBase : MonoBehaviour
             hunger = data.hunger;
             bathroom = data.bathroom;
             timerCount = data.timerCount;
+
+            // Pide a la clase hija que cargue sus datos específicos
+            AddStageSpecificData(data);
 
             OnGameDataLoaded?.Invoke(data);
             Debug.Log("LoadGame() cargó datos.");
@@ -196,14 +242,13 @@ public class PlayerControllerBase : MonoBehaviour
 
     void UpdateHunger()
     {
-        hunger -= Time.deltaTime * 0.1f; // ajustable
+        hunger -= Time.deltaTime * 5f;
         if (hunger < 0) hunger = 0f;
     }
 
     void UpdateBathroom()
     {
-        // aumentamos nivel de caca con el tiempo (0 -> 100)
-        bathroom += Time.deltaTime * velocidadCargaCaca; // ajusta velocidad en inspector si quieres
+        bathroom += Time.deltaTime * velocidadCargaCaca;
         if (bathroom > 100f) bathroom = 100f;
     }
 }

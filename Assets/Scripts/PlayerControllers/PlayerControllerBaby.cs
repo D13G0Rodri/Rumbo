@@ -40,7 +40,6 @@ public class PlayerControllerBaby : PlayerControllerBase
 
 
 
-
     // CAMBIO: Sobrescribimos el método para crear datos, en lugar de todo el SaveGame.
     protected override PlayerData CreatePlayerData()
     {
@@ -52,7 +51,7 @@ public class PlayerControllerBaby : PlayerControllerBase
 
         return data;
     }
-    
+
     // CAMBIO: Ahora LoadGame recibe el PlayerData del base.LoadGame()
     public override PlayerData LoadGame()
     {
