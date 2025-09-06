@@ -357,7 +357,6 @@ MonoBehaviour:
   bebe: {fileID: 998292329}
   velocidadMovimiento: 3
   distanciaMinima: 0.5
-  nombreEscenaVideo: EscenaVideo
 --- !u!50 &221387883
 Rigidbody2D:
   serializedVersion: 5
@@ -600,8 +599,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 998292329}
-  - {fileID: 903209437}
   - {fileID: 221387880}
+  - {fileID: 903209437}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &282333959
@@ -9642,6 +9641,8 @@ GameObject:
   m_Component:
   - component: {fileID: 903209437}
   - component: {fileID: 903209438}
+  - component: {fileID: 903209439}
+  - component: {fileID: 903209440}
   m_Layer: 0
   m_Name: "Mam\xE1"
   m_TagString: Untagged
@@ -9658,7 +9659,7 @@ Transform:
   m_GameObject: {fileID: 903209436}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.23, y: 0, z: 0.13189147}
+  m_LocalPosition: {x: 125.57, y: -2.51, z: 0.13189147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9719,6 +9720,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &903209439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903209436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9904f0adbc4d95a4e8bf6db7c6845fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bebe: {fileID: 998292329}
+  velocidadMovimiento: 5
+  distanciaMinima: 0.5
+--- !u!50 &903209440
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903209436}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &982874961
 GameObject:
   m_ObjectHideFlags: 0
@@ -10056,7 +10099,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelDialogEnchufe: {fileID: 2024010066}
   animator: {fileID: 998292331}
-  randomEvent: {fileID: 0}
   playerController: {fileID: 0}
   timerVida: {fileID: 553262406}
   sceneChanger: {fileID: 1461526589}
@@ -10096,6 +10138,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce74df1e443ed244b92f45b885a52020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnBebeHambriento:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 903209439}
+        m_TargetAssemblyTypeName: MamaController, Assembly-CSharp
+        m_MethodName: IrHaciaBebe
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &998292337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10126,6 +10183,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  yaSeHizo: 1
 --- !u!1 &1046109740
 GameObject:
   m_ObjectHideFlags: 0

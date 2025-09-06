@@ -21,6 +21,12 @@ EditorBuildSettings:
     path: Assets/1_etapa_bebe/Scenes/BebeGatea.unity
     guid: 75c6038fd3bd9c547b47b9bc75a7ebf9
   - enabled: 1
+    path: Assets/1_etapa_bebe/Scenes/eventos/limpiando-bebe/PapaLimpiaBebe.unity
+    guid: b82e530dc3731ad44ba30ddbf76f1bd7
+  - enabled: 1
+    path: Assets/1_etapa_bebe/Scenes/eventos/alimentando-bebe/MamaAlimentaBebe.unity
+    guid: dd746456c13ad1249b995cd98f9c027f
+  - enabled: 1
     path: Assets/9_escenas_generales/muerte/Muerte.unity
     guid: 59190f5a53e452745807903d6c029651
   - enabled: 1

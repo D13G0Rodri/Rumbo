@@ -272,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "walk-mam\xE1_0": -4352322456224617989
+      "walk-mam\xE1_1": -3511568110701115898
+      "walk-mam\xE1_2": -1867946559169094462
+      "walk-mam\xE1_3": -4074214539302234528
+      "walk-mam\xE1_4": 3973038158713997069
+      "walk-mam\xE1_5": 1775892310892191408
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PapaController : MonoBehaviour
+public class MamaController : MonoBehaviour
 {
-    [Header("Configuración del Papá")]
+    [Header("Configuración de la Mamá")]
     public Transform bebe; // Asigna el transform del bebé en el Inspector
     public float velocidadMovimiento = 3f;
     public float distanciaMinima = 0.5f; // Distancia para detenerse frente al bebé
-    private string nombreEscenaVideo = "PapaLimpiaBebe"; // Nombre de la escena del video
+    private string nombreEscenaVideo = "MamaAlimentaBebe"; // Nombre de la escena del video
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -27,12 +27,12 @@ public class PapaController : MonoBehaviour
         }
     }
 
-    // Método llamado desde el evento OnBebeLlora en CacaManager
+    // Método llamado desde el evento OnBebeHambriento en ComidaManager
     public void IrHaciaBebe()
     {
         moviendoHaciaBebe = true;
-        animator.SetBool("isWalking", true);// Activa la animación de caminar
-        Debug.Log("¡El papá va hacia el bebé!");
+        // animator.SetBool("isWalking", true); // Activa la animación de caminar
+        Debug.Log("¡La mamá va hacia el bebé!");
     }
 
     void MoverHaciaBebe()
@@ -47,14 +47,14 @@ public class PapaController : MonoBehaviour
         if (Vector2.Distance(transform.position, bebe.position) < distanciaMinima)
         {
             rb.linearVelocity = Vector2.zero;
-            animator.SetBool("isWalking", false); // Detiene la animación de caminar
+            // animator.SetBool("isWalking", false); // Detiene la animación de caminar
             moviendoHaciaBebe = false;
-
+            Debug.Log("YA LO TOCÓOOOOOOOOOOOOOOOOOO");
             // Guardar los datos del juego antes de cambiar de escena
             PlayerControllerBase playerController = FindFirstObjectByType<PlayerControllerBase>();
             if (playerController != null)
             {
-                playerController.bathroom = 0f;
+                playerController.hunger = 100f; // Restablecer la comida
                 playerController.SaveCheckpoint();
                 Debug.Log("Datos guardados antes de cargar la escena del video.");
             }
