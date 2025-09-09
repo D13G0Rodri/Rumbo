@@ -26,6 +26,7 @@ public class PlayerControllerBase : MonoBehaviour
     public float hunger = 100f;
     public float bathroom = 0f;
     public float timerCount;
+    public bool presentationPanelShown;
 
     protected bool isReceivingDamage;
     protected bool isGrounded;
@@ -52,6 +53,7 @@ public class PlayerControllerBase : MonoBehaviour
             hunger = 100f;
             bathroom = 0f;
             timerCount = 0f;
+            presentationPanelShown = false;
         }
         else
         {
@@ -142,19 +144,11 @@ public class PlayerControllerBase : MonoBehaviour
 
     // --- SISTEMA DE GUARDADO Y CARGA (REFACTORIZADO) ---
 
-    /// <summary>
-    /// NUEVO: Método virtual para que las clases hijas añadan sus datos específicos.
-    /// En la clase base, este método no hace nada.
-    /// </summary>
     protected virtual void AddStageSpecificData(PlayerData data)
     {
         // Las clases hijas (Child, Teen) sobrescribirán este método.
     }
 
-    /// <summary>
-    /// MÉTODO PRINCIPAL PARA GUARDADO DE TRANSICIÓN DE ETAPA.
-    /// Llama a este método cuando quieras pasar a la siguiente etapa.
-    /// </summary>
     public void SaveGame()
     {
         PlayerData data = CreatePlayerData();
@@ -162,13 +156,11 @@ public class PlayerControllerBase : MonoBehaviour
         Debug.Log("SaveGame() para transición de etapa ejecutado.");
     }
 
-    /// <summary>
-    /// MÉTODO PRINCIPAL PARA GUARDADO DE CHECKPOINT.
-    /// Llama a este método cuando quieras guardar el progreso DENTRO de una etapa.
-    /// </summary>
-    public void SaveCheckpoint()
+    public void SaveCheckpoint(bool orderingAchievement = false)
     {
-        // 1. Crea el contenedor de datos base (con el nombre de la escena actual).
+        PlayerData existingData = SaveSystem.LoadPlayerData();
+        bool previousAchievementState = existingData?.hasOrderingAchievement ?? false;
+
         PlayerData data = new PlayerData
         {
             health = this.health,
@@ -178,21 +170,25 @@ public class PlayerControllerBase : MonoBehaviour
             hunger = this.hunger,
             bathroom = this.bathroom,
             currentSceneName = SceneManager.GetActiveScene().name,
-            timerCount = (FindFirstObjectByType<TimerVida>() != null) ? FindFirstObjectByType<TimerVida>().timerCount : this.timerCount
+            timerCount = (FindFirstObjectByType<TimerVida>() != null) ? FindFirstObjectByType<TimerVida>().timerCount : this.timerCount,
+            hasOrderingAchievement = orderingAchievement || previousAchievementState,
+            presentationPanelShown = this.presentationPanelShown
         };
 
-        // 2. Pide a la clase hija que añada sus datos específicos (energía, felicidad, etc.).
-        AddStageSpecificData(data);
+        PushableObject[] pushables = FindObjectsByType<PushableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var obj in pushables)
+        {
+            if (!string.IsNullOrEmpty(obj.objectId))
+            {
+                                data.pushableObjectPositions[obj.objectId] = new SerializableVector3(obj.transform.position);
+            }
+        }
 
-        // 3. Guarda el archivo.
+        AddStageSpecificData(data);
         SaveSystem.SavePlayerData(data);
-        Debug.Log("SaveCheckpoint() ejecutado para la escena: " + data.currentSceneName);
+        Debug.Log("SaveCheckpoint() ejecutado. Logro de ordenar: " + data.hasOrderingAchievement);
     }
 
-    /// <summary>
-    /// Crea el contenedor de datos para una TRANSICIÓN.
-    /// Las clases hijas lo sobrescriben para definir la PRÓXIMA escena.
-    /// </summary>
     protected virtual PlayerData CreatePlayerData()
     {
         PlayerData data = new PlayerData
@@ -204,24 +200,19 @@ public class PlayerControllerBase : MonoBehaviour
             hunger = this.hunger,
             bathroom = this.bathroom,
             currentSceneName = SceneManager.GetActiveScene().name,
-            timerCount = (FindFirstObjectByType<TimerVida>() != null) ? FindFirstObjectByType<TimerVida>().timerCount : this.timerCount
+            timerCount = (FindFirstObjectByType<TimerVida>() != null) ? FindFirstObjectByType<TimerVida>().timerCount : this.timerCount,
+            presentationPanelShown = this.presentationPanelShown
         };
         
-        // Pide a la clase hija que añada sus datos.
         AddStageSpecificData(data);
-
         return data;
     }
 
-    /// <summary>
-    /// Carga los datos del archivo y los aplica al estado del jugador.
-    /// </summary>
     public virtual PlayerData LoadGame()
     {
         PlayerData data = SaveSystem.LoadPlayerData();
         if (data != null)
         {
-            // Carga los datos base
             health = data.health;
             transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
             intelligence = data.intelligence;
@@ -229,9 +220,22 @@ public class PlayerControllerBase : MonoBehaviour
             hunger = data.hunger;
             bathroom = data.bathroom;
             timerCount = data.timerCount;
+            presentationPanelShown = data.presentationPanelShown;
 
-            // Pide a la clase hija que cargue sus datos específicos
             AddStageSpecificData(data);
+
+            if (data.pushableObjectPositions != null)
+            {
+                PushableObject[] pushables = FindObjectsByType<PushableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                foreach (var obj in pushables)
+                {
+                                        if (!string.IsNullOrEmpty(obj.objectId) && data.pushableObjectPositions.ContainsKey(obj.objectId))
+                    {
+                        SerializableVector3 pos = data.pushableObjectPositions[obj.objectId];
+                        obj.transform.position = pos.ToVector3();
+                    }
+                }
+            }
 
             OnGameDataLoaded?.Invoke(data);
             Debug.Log("LoadGame() cargó datos.");
