@@ -1,57 +1,109 @@
+using System.Collections;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class DoorTeleport : MonoBehaviour
 {
-    public Transform destination; // Asigna el destino en el Inspector
-    public KeyCode teleportKey = KeyCode.LeftControl; // Tecla para teletransportar
+    [Header("Teletransporte")]
+    public Transform destination;                      // punto de llegada
+    public KeyCode teleportKey = KeyCode.LeftControl;  // tecla para entrar
 
-    private bool playerNearby = false;
+    [Header("Cinemachine (CM3)")]
+    public CinemachineCamera vcam;  // arrastra tu CM vcam1
+    public Transform player;         // arrastra el jugador
+
+    bool playerNearby = false;
 
     void Update()
     {
-        // Si el jugador está cerca y presiona la tecla, teletransportar
         if (playerNearby && Input.GetKeyDown(teleportKey))
-        {
             TeleportPlayer();
-        }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.transform == player)
         {
             playerNearby = true;
-            Debug.Log("Presiona LeftControl para teletransportar.");
+            // Debug.Log($"Presiona {teleportKey} para teletransportar.");
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
+        if (other.transform == player)
             playerNearby = false;
-            Debug.Log("Jugador se alejó de la puerta.");
-        }
     }
 
-    private void TeleportPlayer()
+    void TeleportPlayer()
     {
-        if (destination != null)
+        if (destination == null || player == null || vcam == null)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                player.transform.position = destination.position;
-                Debug.Log("¡Teletransportado a: " + destination.name);
-            }
-            else
-            {
-                Debug.LogError("No se encontró al jugador con el tag 'Player'.");
-            }
+            Debug.LogError("DoorTeleport: faltan referencias (destination / player / vcam).");
+            return;
         }
-        else
+
+        // ---- mover al jugador ----
+        Vector3 oldPos = player.position;
+
+        var rb = player.GetComponent<Rigidbody2D>();
+        if (rb)
         {
-            Debug.LogError("No se ha asignado un destino.");
+            rb.linearVelocity = Vector2.zero; // Unity 6
+            rb.angularVelocity = 0f;
         }
+
+        player.position = destination.position;
+        Physics2D.SyncTransforms(); // que el confiner/colisiones vean la nueva pos ya
+
+        // Avisar a Cinemachine que el target "saltó"
+        // (ayuda a resetear estados internos de seguimiento)
+        try { vcam.OnTargetObjectWarped(player, player.position - oldPos); } catch {}
+
+        // Snap de la cámara para evitar que el Confiner la deje pegada al polígono anterior
+        StartCoroutine(SnapCinemachineOneFrame());
+    }
+
+    IEnumerator SnapCinemachineOneFrame()
+    {
+        var confiner = vcam.GetComponent<CinemachineConfiner2D>();
+        var composer = vcam.GetComponent<CinemachinePositionComposer>();
+
+        // Guardar damping y desactivarlo un frame
+        Vector2 oldDamping = Vector2.zero;
+        if (composer != null)
+        {
+            oldDamping = composer.Damping;
+            composer.Damping = Vector2.zero;
+        }
+
+        // Desactivar Confiner por 1 frame para permitir el "salto"
+        bool confWasEnabled = confiner && confiner.enabled;
+        if (confiner) confiner.enabled = false;
+
+        // Romper blends y colocar la VCam sobre el player
+        var oldFollow = vcam.Follow;
+        vcam.Follow = null;
+        vcam.transform.position = new Vector3(
+            player.position.x,
+            player.position.y,
+            vcam.transform.position.z
+        );
+
+        // Esperar 1 frame
+        yield return null;
+
+        // Volver a seguir al jugador
+        vcam.Follow = player;
+
+        // Reactivar confiner y reconstruir la forma (método CM3)
+        if (confiner)
+        {
+            confiner.enabled = confWasEnabled;
+            confiner.InvalidateBoundingShapeCache();
+        }
+
+        // Restaurar damping
+        if (composer != null) composer.Damping = oldDamping;
     }
 }
