@@ -47,6 +47,15 @@ EditorBuildSettings:
   - enabled: 1
     path: "Assets/2_etapa_ni\xF1o/images/objects/tv/videoGame.unity"
     guid: 02d074221e0993a439299d86cd0ddd00
+  - enabled: 1
+    path: "Assets/2_etapa_ni\xF1o/Scenes/Cafeteria/ElegirComida.unity"
+    guid: 25ad038ceaa05d64e8a3fe2cebfca291
+  - enabled: 1
+    path: "Assets/2_etapa_ni\xF1o/Scenes/Cafeteria/BuenaDecision.unity"
+    guid: 8bdd0df67d1bbd645b65ca6745658f48
+  - enabled: 1
+    path: "Assets/2_etapa_ni\xF1o/Scenes/Cafeteria/MalaDecision.unity"
+    guid: ee0b9413c92994d4da25bf1a72631a02
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
