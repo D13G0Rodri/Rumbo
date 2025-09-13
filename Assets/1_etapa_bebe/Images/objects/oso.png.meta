@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 98ef99a33b9362348b19a3458e44f873
+guid: cfa709e76a837e740a76164b3f6779b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1203961717735715966
-    second: mala decision de comida_0
+      213: 2075025254975684318
+    second: oso_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mala decision de comida_0
+      name: oso_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2000
-        height: 1000
+        width: 70
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 28b8133523baa4fe0800000000000000
-      internalID: -1203961717735715966
+      spriteID: ede3ac6b978fbcc10800000000000000
+      internalID: 2075025254975684318
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      mala decision de comida_0: -1203961717735715966
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
