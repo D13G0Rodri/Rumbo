@@ -1686,7 +1686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerCount: 0
-  maxTime: 60
+  maxTime: 10
   panelTextToFinish: {fileID: 231608476}
 --- !u!4 &553262407
 Transform:
@@ -10653,6 +10653,7 @@ MonoBehaviour:
   hunger: 100
   bathroom: 100
   timerCount: 0
+  presentationPanelShown: 0
   velocidadCargaCaca: 5
 --- !u!114 &998292336
 MonoBehaviour:
@@ -11533,7 +11534,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   presentationPanel: {fileID: 2060620833}
   timerVida: {fileID: 553262406}
-  activationPercentage: 0.5
   panelDisplayDuration: 4
 --- !u!1 &1537653673
 GameObject:

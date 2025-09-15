@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class TimerVida : MonoBehaviour
 {
     public float timerCount = 0f;
-    [SerializeField] public float maxTime = 1200f;
+    [SerializeField] public float maxTime = 60f;
     private Image barraTiempo;
     public GameObject panelTextToFinish;
 
