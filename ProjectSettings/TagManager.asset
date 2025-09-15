@@ -19,6 +19,7 @@ TagManager:
   - Ladron
   - Obj_TV
   - barraComida
+  - player
   layers:
   - Default
   - TransparentFX

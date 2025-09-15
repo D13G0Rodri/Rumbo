@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Cafeteria colegio_0: -739627497280721227
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
