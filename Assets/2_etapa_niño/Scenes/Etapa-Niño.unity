@@ -36150,7 +36150,11 @@ MonoBehaviour:
   stepInterval: 0.4
   volume: 0.4
   minSpeedForSteps: 0.1
-  maxVerticalSpeedForSteps: 0.05
+  jumpCutoff: 0.01
+  fallCutoff: 0.01
+  downProbe: 0.02
+  normalMin: 80
+  normalMax: 100
 --- !u!1 &557528488
 GameObject:
   m_ObjectHideFlags: 0
@@ -37547,33 +37551,6 @@ Transform:
   - {fileID: 1083909646}
   m_Father: {fileID: 705688754}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1228531150
-GameObject:
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1228531151}
-  m_Layer: 0
-  m_Name: GroundCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1228531151
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1228531150}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.71, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 502077895}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1224889356
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -37666,6 +37643,37 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 10}
   m_EdgeRadius: 0
+--- !u!1 &1228531150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1228531151}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1228531151
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228531150}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.71, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 502077895}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1262496485
 GameObject:
   m_ObjectHideFlags: 0
@@ -38857,7 +38865,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 19.9, y: 9.8}
+  m_Size: {x: 19.9, y: 10}
   m_EdgeRadius: 0
 --- !u!61 &1401134930
 BoxCollider2D:
@@ -39181,13 +39189,13 @@ CompositeCollider2D:
   - m_Collider: {fileID: 1401134929}
     m_ColliderPaths:
     - - X: 3162000128
-        Y: 64500000
+        Y: 65500000
       - X: 2962999808
-        Y: 64500000
+        Y: 65500000
       - X: 2962999808
-        Y: -33500002
+        Y: -34500000
       - X: 3162000128
-        Y: -33500002
+        Y: -34500000
   m_CompositePaths:
     m_Paths:
     - - {x: 266.26, y: 31.1}
@@ -39202,10 +39210,10 @@ CompositeCollider2D:
       - {x: 261.09998, y: 6.6000004}
       - {x: 221.3, y: 6.5999713}
       - {x: 221.30002, y: -3.2}
-    - - {x: 316.19998, y: -3.3500001}
-      - {x: 316.19998, y: 6.4500003}
-      - {x: 296.3, y: 6.4499707}
-      - {x: 296.30002, y: -3.3500001}
+    - - {x: 316.19998, y: -3.45}
+      - {x: 316.19998, y: 6.55}
+      - {x: 296.3, y: 6.549971}
+      - {x: 296.30002, y: -3.45}
     - - {x: 173.69998, y: -4.5}
       - {x: 173.69998, y: 5.1000004}
       - {x: 73.9, y: 5.0999713}
