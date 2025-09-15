@@ -6,7 +6,7 @@ public class DoorTeleport : MonoBehaviour
 {
     [Header("Teletransporte")]
     public Transform destination;                      // punto de llegada
-    public KeyCode teleportKey = KeyCode.LeftControl;  // tecla para entrar
+    public KeyCode teleportKey = KeyCode.E;  // tecla para entrar
 
     [Header("Cinemachine (CM3)")]
     public CinemachineCamera vcam;  // arrastra tu CM vcam1
