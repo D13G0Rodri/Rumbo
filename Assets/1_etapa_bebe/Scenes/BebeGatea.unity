@@ -1688,7 +1688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerCount: 0
-  maxTime: 60
+  maxTime: 10
   panelTextToFinish: {fileID: 231608476}
 --- !u!4 &553262407
 Transform:

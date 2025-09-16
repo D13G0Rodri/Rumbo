@@ -23,6 +23,7 @@ public class MUERTE : MonoBehaviour
             // Si no hay audio, es útil saberlo para depurar.
             Debug.LogWarning("MUERTE.cs: No se encontró un AudioSource o no tiene un AudioClip asignado. Se cambiará de escena inmediatamente.");
             // Si no hay audio configurado, cargamos la escena directamente para no quedarnos atascados.
+            SaveSystem.DeleteSave();
             SceneManager.LoadScene("MenuPrincipal");
         }
     }
@@ -33,6 +34,7 @@ public class MUERTE : MonoBehaviour
         if (audioIniciado && !audioSource.isPlaying)
         {
             // Cuando el audio termina, !audioSource.isPlaying será true y cambiaremos de escena.
+            SaveSystem.DeleteSave();
             SceneManager.LoadScene("MenuPrincipal");
         }
     }
