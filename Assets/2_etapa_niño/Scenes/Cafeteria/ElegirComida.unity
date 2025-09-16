@@ -331,6 +331,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d3839b31371c54bb7d81e1f641f547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bananaIntelligenceDelta: 1
+  bananaHappinessDelta: 0.5
+  chipsIntelligenceDelta: -0.5
+  chipsHappinessDelta: 5
 --- !u!114 &808673544
 MonoBehaviour:
   m_ObjectHideFlags: 0

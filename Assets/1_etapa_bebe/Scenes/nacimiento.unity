@@ -163,7 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 851cb85365957ca4bb91fff7ab2757fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiempoDeEspera: 14
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,6 +907,7 @@ MonoBehaviour:
   esperaInicial: 1.5
   duracionTransicionInicial: 1.5
   duracionTexto: 3
+  esperaAntesDeCambiarEscena: 5
 --- !u!1 &1766072531
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,7 +986,7 @@ AudioSource:
   m_GameObject: {fileID: 1766072531}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: eccbcc4a39bb9ed40978e2a1fb07cf57, type: 2}
+  OutputAudioMixerGroup: {fileID: 2352808793019961330, guid: eccbcc4a39bb9ed40978e2a1fb07cf57, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

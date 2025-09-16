@@ -3,17 +3,21 @@ using UnityEngine.SceneManagement;
 
 public class TVInteractOpenMenu : MonoBehaviour
 {
-    public Transform jugador;          // Aquí arrastrarás tu Player
-    public string menuSceneName = "TVMenu"; // Nombre de la escena nueva
-    bool enZona = false;
+    public Transform jugador;                  // Aquí arrastrarás tu Player
+    public string menuSceneName = "TVMenu";    // Nombre de la escena nueva
+
+    [Header("Configuración de Interacción")]
+    [SerializeField] private KeyCode interactKey = KeyCode.E; 
+    // <-- Puedes elegir cualquier tecla desde el Inspector
+
+    private bool enZona = false;
 
     void Update()
     {
         // Solo si el jugador está dentro de la zona invisible
         if (enZona)
         {
-            // Si presiona la tecla Control
-            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+            if (Input.GetKeyDown(interactKey))
             {
                 // Guardar la posición actual del jugador
                 if (jugador != null)
