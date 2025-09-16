@@ -27,8 +27,6 @@ public class PlayerData
     // Datos Comunes
     public float health;
     public float[] position;
-    public float intelligence;
-    public float concentration;
     public float hunger;
     public float bathroom;
     public string currentSceneName;
@@ -45,10 +43,11 @@ public class PlayerData
     public bool presentationPanelShown;
 
     // Datos del Niño
-    public float energy;
-
-    // Datos del Adolescente
+    public float karma;
+    public float intelligence;
     public float happiness;
+    public float concentration;
+    public float energy;
 
     public PlayerData()
     {
