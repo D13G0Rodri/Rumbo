@@ -17,6 +17,7 @@ public class MUERTE : MonoBehaviour
         {
             audioSource.Play();
             audioIniciado = true; // Marcamos que el audio ha comenzado.
+            SaveSystem.DeleteSave();
         }
         else
         {
@@ -34,7 +35,7 @@ public class MUERTE : MonoBehaviour
         if (audioIniciado && !audioSource.isPlaying)
         {
             // Cuando el audio termina, !audioSource.isPlaying será true y cambiaremos de escena.
-            SaveSystem.DeleteSave();
+            
             SceneManager.LoadScene("MenuPrincipal");
         }
     }
