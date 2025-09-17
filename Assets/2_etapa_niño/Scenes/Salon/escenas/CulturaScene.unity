@@ -552,7 +552,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 58dc4f97663bb2c418d029b74260006b, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 58dc4f97663bb2c418d029b74260006b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.323
@@ -1670,7 +1670,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5933413741351382349, guid: 15d8045d57028834393ba420a38fafb6, type: 3}
+  m_Sprite: {fileID: -5933413741351382349, guid: 8b8f5618ef6af8f4090cb484c25c84f0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1771,7 +1771,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2082625400}
+      - m_Target: {fileID: 2082625402}
         m_TargetAssemblyTypeName: CultureQuizManager, Assembly-CSharp
         m_MethodName: VerRespuestas
         m_Mode: 1
@@ -2066,7 +2066,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4152115206092537845, guid: 1753b2e1add9ba8478505fab2c56dad8, type: 3}
+  m_Sprite: {fileID: 4152115206092537845, guid: 18e936558b46f754abe236f83342398e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2193,7 +2193,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 627369974051932967, guid: 45bea6919389ecf4ea4be1cce6534427, type: 3}
+  m_Sprite: {fileID: 627369974051932967, guid: 0973e90f8ef8a6f4b9dd915a2add5aeb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2498,7 +2498,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3498408665392336353, guid: b09c8da66b5b7f84dbae51407999a97e, type: 3}
+  m_Sprite: {fileID: 3498408665392336353, guid: f3e26617a2120404098d27b4eea440d8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3028,7 +3028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2082625401}
-  - component: {fileID: 2082625400}
+  - component: {fileID: 2082625402}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3036,27 +3036,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2082625400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082625399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b64af95b7c156de4ca17b21af96b4a31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  banderaField: {fileID: 835210133}
-  eiffelField: {fileID: 1625489052}
-  huesosField: {fileID: 1737194966}
-  feedbackText: {fileID: 1199753387}
-  titleText: {fileID: 1066068154}
-  classroomSceneName: "Etapa-Ni\xF1o"
-  banderaEsperada: colombia
-  eiffelEsperada: francia
-  huesosEsperada: 206
 --- !u!4 &2082625401
 Transform:
   m_ObjectHideFlags: 0
@@ -3072,6 +3051,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2082625402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082625399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe582db8541c7c64eaa480299fe6bc31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  banderaField: {fileID: 835210133}
+  eiffelField: {fileID: 1625489052}
+  huesosField: {fileID: 1737194966}
+  feedbackText: {fileID: 1199753387}
+  titleText: {fileID: 1066068154}
+  classroomSceneName: "Etapa-Ni\xF1o"
+  banderaEsperada: colombia
+  eiffelEsperada: francia
+  huesosEsperada: 206
 --- !u!1 &2105492038
 GameObject:
   m_ObjectHideFlags: 0

@@ -893,7 +893,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3130604638795408921, guid: cb055e8f9424fd84aad3088a09e3cda4, type: 3}
+  m_Sprite: {fileID: -3130604638795408921, guid: 045bef0e35d33cf4bb801ddbc42246a5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1266,7 +1266,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1560469354}
+      - m_Target: {fileID: 1560469356}
         m_TargetAssemblyTypeName: MathQuizManager, Assembly-CSharp
         m_MethodName: Enviar
         m_Mode: 1
@@ -1482,7 +1482,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1560469355}
-  - component: {fileID: 1560469354}
+  - component: {fileID: 1560469356}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1490,29 +1490,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1560469354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1560469353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c059c9f6b7544d42bb84a7fa4c24540, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questionText: {fileID: 498775019}
-  answerField: {fileID: 732950967}
-  feedbackText: {fileID: 1245709793}
-  classroomSceneName: "Etapa-Ni\xF1o"
-  preguntas:
-  - texto: 2 + 2 = ?
-    respuesta: 4
-  - texto: 1 x 5 = ?
-    respuesta: 5
-  - texto: 4 / 2 = ?
-    respuesta: 2
 --- !u!4 &1560469355
 Transform:
   m_ObjectHideFlags: 0
@@ -1528,6 +1505,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1560469356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560469353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8900eb8695c0eba458c5a74a7dcfef6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questionText: {fileID: 498775019}
+  answerField: {fileID: 732950967}
+  feedbackText: {fileID: 1245709793}
+  classroomSceneName: "Etapa-Ni\xF1o"
+  preguntas:
+  - texto: 2 + 2 = ?
+    respuesta: 4
+  - texto: 5 - 1 = ?
+    respuesta: 4
+  - texto: 8 / 2 = ?
+    respuesta: 4
 --- !u!1 &1600584975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,7 +1555,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 58dc4f97663bb2c418d029b74260006b, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 58dc4f97663bb2c418d029b74260006b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.323
