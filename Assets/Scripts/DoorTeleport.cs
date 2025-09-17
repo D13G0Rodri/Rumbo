@@ -5,12 +5,16 @@ using Unity.Cinemachine;
 public class DoorTeleport : MonoBehaviour
 {
     [Header("Teletransporte")]
-    public Transform destination;                      // punto de llegada
-    public KeyCode teleportKey = KeyCode.E;  // tecla para entrar
+    public Transform destination;                   // punto de llegada
+    public KeyCode teleportKey = KeyCode.E;         // tecla para entrar
 
     [Header("Cinemachine (CM3)")]
-    public CinemachineCamera vcam;  // arrastra tu CM vcam1
-    public Transform player;         // arrastra el jugador
+    public CinemachineCamera vcam;                  // arrastra tu CM vcam1
+    public Transform player;                        // arrastra el jugador
+
+    [Header("Transición")]
+    public float transitionSeconds = 2f;            // duración total de la transición
+    public AudioClip transitionClip;                // sonido opcional (whoosh/cadenas)
 
     bool playerNearby = false;
 
@@ -25,7 +29,7 @@ public class DoorTeleport : MonoBehaviour
         if (other.transform == player)
         {
             playerNearby = true;
-            // Debug.Log($"Presiona {teleportKey} para teletransportar.");
+            // Aquí podrías mostrar un "Presiona E" si quieres
         }
     }
 
@@ -43,24 +47,41 @@ public class DoorTeleport : MonoBehaviour
             return;
         }
 
-        // ---- mover al jugador ----
+        // Secuencia EXACTA pedida:
+        // Fade-out sin pausar → TP + cámara en negro → pausar → mini espera → fade-in → reanudar
+        TransitionManager.Instance.FadeCustom(
+            transitionSeconds,
+            transitionClip,
+            () => { PerformTeleportImmediately(); } // se ejecuta en negro total
+        );
+    }
+
+    // === Tu lógica original de TP y ajuste de cámara, sin cambios de intención ===
+    void PerformTeleportImmediately()
+    {
         Vector3 oldPos = player.position;
 
         var rb = player.GetComponent<Rigidbody2D>();
         if (rb)
         {
-            rb.linearVelocity = Vector2.zero; // Unity 6
+            // Unity 6 (Physics 2D):
+            rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
         }
 
+        // Mover al jugador
         player.position = destination.position;
-        Physics2D.SyncTransforms(); // que el confiner/colisiones vean la nueva pos ya
+        Physics2D.SyncTransforms(); // que confiner/colisiones vean la nueva pos
 
-        // Avisar a Cinemachine que el target "saltó"
-        // (ayuda a resetear estados internos de seguimiento)
-        try { vcam.OnTargetObjectWarped(player, player.position - oldPos); } catch {}
+        // Avisar a Cinemachine del "warp"
+        try
+        {
+            Vector3 delta = player.position - oldPos;
+            vcam.OnTargetObjectWarped(player, delta);
+        }
+        catch {}
 
-        // Snap de la cámara para evitar que el Confiner la deje pegada al polígono anterior
+        // Snap de un frame para asegurar la cámara
         StartCoroutine(SnapCinemachineOneFrame());
     }
 
@@ -69,7 +90,7 @@ public class DoorTeleport : MonoBehaviour
         var confiner = vcam.GetComponent<CinemachineConfiner2D>();
         var composer = vcam.GetComponent<CinemachinePositionComposer>();
 
-        // Guardar damping y desactivarlo un frame
+        // Guardar damping y desactivarlo 1 frame
         Vector2 oldDamping = Vector2.zero;
         if (composer != null)
         {
@@ -77,7 +98,7 @@ public class DoorTeleport : MonoBehaviour
             composer.Damping = Vector2.zero;
         }
 
-        // Desactivar Confiner por 1 frame para permitir el "salto"
+        // Desactivar confiner por 1 frame para permitir el “salto”
         bool confWasEnabled = confiner && confiner.enabled;
         if (confiner) confiner.enabled = false;
 
@@ -96,7 +117,7 @@ public class DoorTeleport : MonoBehaviour
         // Volver a seguir al jugador
         vcam.Follow = player;
 
-        // Reactivar confiner y reconstruir la forma (método CM3)
+        // Reactivar confiner y reconstruir cache
         if (confiner)
         {
             confiner.enabled = confWasEnabled;
