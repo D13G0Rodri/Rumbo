@@ -11,7 +11,7 @@ public class StatChangeToast : MonoBehaviour
 
     [Header("Formato y color")]
     [SerializeField, Range(0,2)] private int decimalPlaces = 1;
-    [SerializeField] private Color gainColor = new Color(0.2f, 0.9f, 0.3f); // verde
+    [SerializeField] private Color gainColor = new Color(0.2f, 0.9f, 0.3f);   // verde
     [SerializeField] private Color lossColor = new Color(0.95f, 0.25f, 0.25f); // rojo
 
     [Header("Timing")]
@@ -34,36 +34,43 @@ public class StatChangeToast : MonoBehaviour
 
     void Start()
     {
-        // ¿Hay toast pendiente?
-        if (PlayerPrefs.GetInt("stat_toast_pending", 0) != 1)
-            return;
+        // Sigue funcionando para el caso en que cambias de escena
+        if (PlayerPrefs.GetInt("stat_toast_pending", 0) != 1) return;
+        if (!LoadBufferToUI()) { ClearFlag(); return; }
 
+        if (toastSound != null) toastSound.Play();
+        StartCoroutine(ShowAndFade());
+    }
+
+    /// <summary>
+    /// NUEVO: Llama esto cuando quieras mostrar el toast SIN cambiar de escena,
+    /// por ejemplo justo después de cerrar un panel de decisión.
+    /// </summary>
+    public void ShowNowFromBuffer()
+    {
+        if (PlayerPrefs.GetInt("stat_toast_pending", 0) != 1) return;
+        if (!LoadBufferToUI()) { ClearFlag(); return; }
+
+        if (toastSound != null) toastSound.Play();
+
+        StopAllCoroutines(); // por si estuviera mostrando otro
+        StartCoroutine(ShowAndFade());
+    }
+
+    // --- Carga los PlayerPrefs al UI; devuelve false si no hay nada que mostrar ---
+    private bool LoadBufferToUI()
+    {
         float dInt = PlayerPrefs.GetFloat("delta_intelligence", 0f);
         float dKar = PlayerPrefs.GetFloat("delta_karma",        0f);
         float dHap = PlayerPrefs.GetFloat("delta_happiness",    0f);
 
-        // Armar textos (activar solo los que tengan delta != 0)
         string fmt = "F" + decimalPlaces;
 
         SetLine(intelligenceDeltaText, "Inteligencia", dInt, fmt);
         SetLine(karmaDeltaText,        "Karma",        dKar, fmt);
         SetLine(happinessDeltaText,    "Felicidad",    dHap, fmt);
 
-        // Si todo es cero, no mostramos nada
-        if (!HasAnyLine())
-        {
-            ClearFlag();
-            return;
-        }
-
-        // Reproducir sonido al aparecer (solo si hay algo para mostrar)
-        if (toastSound != null)
-        {
-            toastSound.Play();
-        }
-
-        // Mostrar con animación corta
-        StartCoroutine(ShowAndFade());
+        return HasAnyLine();
     }
 
     private void SetLine(TMP_Text text, string label, float delta, string fmt)
@@ -119,13 +126,12 @@ public class StatChangeToast : MonoBehaviour
         {
             f += Time.unscaledDeltaTime;
             cg.alpha = Mathf.Lerp(1f, 0f, f / fadeSeconds);
-            transform.localPosition = Vector3.Lerp(basePos, basePos + popOffset*0.5f, f / fadeSeconds);
+            transform.localPosition = Vector3.Lerp(basePos, basePos + popOffset * 0.5f, f / fadeSeconds);
             yield return null;
         }
         cg.alpha = 0f;
 
-        // limpiar buffer para no repetir
-        ClearFlag();
+        ClearFlag(); // limpiar buffer para no repetir
     }
 
     private void HideInstant()

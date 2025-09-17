@@ -101,7 +101,7 @@ public class TransitionManager : MonoBehaviour
     }
 
     // ======== NUEVA VERSIÓN CON DELAY PARA CÁMARA ========
-    IEnumerator Co_FadeCustom(float totalDur, AudioClip clip, Action midAction)
+    IEnumerator Co_FadeCustom(float totalDur, AudioClip clip, System.Action midAction)
     {
         isTransitioning = true;
         float half = Mathf.Max(0.05f, totalDur * 0.5f);
@@ -109,32 +109,31 @@ public class TransitionManager : MonoBehaviour
         if (overlay) overlay.blocksRaycasts = true;
         PlayOptional(clip);
 
-        // 1) Fade OUT a negro SIN pausar aún
+        // 0) Congelar de inmediato
+        Time.timeScale = 0f;
+
+        // 1) Fade OUT a negro (unscaled)
         yield return Fade(0f, 1f, half);
 
-        // 2) En negro: ejecutar TP y ajustes de cámara
-        try { midAction?.Invoke(); } catch (Exception e) { Debug.LogError(e); }
+        // 2) En negro: ejecutar TP + ajustes de cámara (warp/snap/confiner)
+        try { midAction?.Invoke(); } catch (System.Exception e) { Debug.LogError(e); }
 
-        // 2.1) Darle tiempo a la cámara para acomodarse antes de congelar el juego
+        // 3) **Descongelar mientras sigue negro** para que la cámara termine de acomodarse
+        //    Usa tu campo `cameraSettleDelay` del manager (ajusta 0.2–0.6s según necesites)
+        Time.timeScale = 1f;
         if (cameraSettleDelay > 0f)
             yield return new WaitForSecondsRealtime(cameraSettleDelay);
 
-        // 3) Ahora sí, pausar para el resto de la transición
-        Time.timeScale = 0f;
-
-        // 4) Pequeña espera en negro para estabilidad (opcional)
-        yield return new WaitForSecondsRealtime(0.05f);
-
-        // 5) Fade IN (unscaled)
+        // 4) Fade IN (sigue negro → aparece)
         yield return Fade(1f, 0f, half);
 
-        // 6) Reanudar
-        Time.timeScale = 1f;
-
+        // 5) Listo (mantener juego corriendo)
         StopOptional();
         if (overlay) overlay.blocksRaycasts = false;
         isTransitioning = false;
     }
+
+
 
     IEnumerator Fade(float from, float to, float duration)
     {
