@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(VideoPlayer))]
 public class PlayCutscene : MonoBehaviour
 {
-    [SerializeField] private string backToSceneName = "Etapa-Niño"; // tu escena de juego
+    [SerializeField] private string backToSceneName = "Etapa-Nino"; // tu escena de juego
 
     void Start()
     {

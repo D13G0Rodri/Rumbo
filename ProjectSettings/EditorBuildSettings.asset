@@ -39,40 +39,40 @@ EditorBuildSettings:
     path: Assets/1_etapa_bebe/Scenes/eventos/ahogado/ahogado.unity
     guid: ccf78fa0026fc364aa1274b616040d01
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/biblioteca/escenas/AnimBuena.unity"
+    path: Assets/2_etapa_nino/Scenes/biblioteca/escenas/AnimBuena.unity
     guid: b2cb9aa2c1e8fb441baec21fb762cc86
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/biblioteca/escenas/AnimMala.unity"
+    path: Assets/2_etapa_nino/Scenes/biblioteca/escenas/AnimMala.unity
     guid: 7bef96e7b334e6d4dab5f2bfc4978e83
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/biblioteca/escenas/EleccionLibros.unity"
+    path: Assets/2_etapa_nino/Scenes/biblioteca/escenas/EleccionLibros.unity
     guid: 36fff03265e1f0643bb8e498ef0fad96
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/images/objects/tv/TVMenu.unity"
+    path: Assets/2_etapa_nino/images/objects/tv/TVMenu.unity
     guid: 2c8122961e4ca21469b27e22d3408b56
   - enabled: 1
     path: Assets/1_etapa_bebe/Scenes/eventos/envenenado/envenenado.unity
     guid: 128de4af70d8c8a4183d02984ab51f90
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/Etapa-Ni\xF1o.unity"
+    path: "Assets/2_etapa_nino/Scenes/Etapa-Ni\xF1o.unity"
     guid: fc90c29ff08aeb14f8eca59afe01ed2c
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/images/objects/tv/TV_Mala.unity"
+    path: Assets/2_etapa_nino/images/objects/tv/TV_Mala.unity
     guid: fb55067c1d95d894eb720a148ad8fb8e
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/images/objects/tv/TV_Buena.unity"
+    path: Assets/2_etapa_nino/images/objects/tv/TV_Buena.unity
     guid: b5b71e26aa721a945b73eef251860e8c
   - enabled: 0
     path: "Assets/2_etapa_ni\xF1o/images/objects/tv/videoGame.unity"
     guid: 02d074221e0993a439299d86cd0ddd00
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/Cafeteria/ElegirComida.unity"
+    path: Assets/2_etapa_nino/Scenes/Cafeteria/ElegirComida.unity
     guid: 25ad038ceaa05d64e8a3fe2cebfca291
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/Cafeteria/BuenaDecision.unity"
+    path: Assets/2_etapa_nino/Scenes/Cafeteria/BuenaDecision.unity
     guid: 8bdd0df67d1bbd645b65ca6745658f48
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/Cafeteria/MalaDecision.unity"
+    path: Assets/2_etapa_nino/Scenes/Cafeteria/MalaDecision.unity
     guid: ee0b9413c92994d4da25bf1a72631a02
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
