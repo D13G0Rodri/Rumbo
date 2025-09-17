@@ -36,6 +36,15 @@ EditorBuildSettings:
     path: "Assets/9_escenas_generales/CambioDeEtapas/bebe-ni\xF1o.unity"
     guid: 4a9a0660c74d1ae42a46e2951a205e6a
   - enabled: 1
+    path: "Assets/2_etapa_ni\xF1o/Scenes/Salon/escenas/CulturaScene.unity"
+    guid: 3e597aee22e0ff243b112d1aa6928678
+  - enabled: 1
+    path: "Assets/2_etapa_ni\xF1o/Scenes/Salon/escenas/LibroScene.unity"
+    guid: faac7c8184f7d6140a70790feead5b4e
+  - enabled: 1
+    path: "Assets/2_etapa_ni\xF1o/Scenes/Salon/escenas/MatematicasScene.unity"
+    guid: ddd2a6a50a9f35844843f88893cba09c
+  - enabled: 1
     path: Assets/1_etapa_bebe/Scenes/eventos/ahogado/ahogado.unity
     guid: ccf78fa0026fc364aa1274b616040d01
   - enabled: 1
