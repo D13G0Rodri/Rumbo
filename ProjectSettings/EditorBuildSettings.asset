@@ -42,15 +42,6 @@ EditorBuildSettings:
     path: "Assets/2_etapa_ni\xF1o/Scenes/biblioteca/escenas/AnimBuena.unity"
     guid: b2cb9aa2c1e8fb441baec21fb762cc86
   - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/Salon/escenas/CulturaScene.unity"
-    guid: 3e597aee22e0ff243b112d1aa6928678
-  - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/Salon/escenas/LibroScene.unity"
-    guid: faac7c8184f7d6140a70790feead5b4e
-  - enabled: 1
-    path: "Assets/2_etapa_ni\xF1o/Scenes/Salon/escenas/MatematicasScene.unity"
-    guid: ddd2a6a50a9f35844843f88893cba09c
-  - enabled: 1
     path: "Assets/2_etapa_ni\xF1o/Scenes/biblioteca/escenas/AnimMala.unity"
     guid: 7bef96e7b334e6d4dab5f2bfc4978e83
   - enabled: 1
