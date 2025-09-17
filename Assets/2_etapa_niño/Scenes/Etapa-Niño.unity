@@ -51406,7 +51406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2091689116}
   - component: {fileID: 2091689118}
-  - component: {fileID: 2091689117}
+  - component: {fileID: 2091689119}
   m_Layer: 0
   m_Name: ClassStartZone
   m_TagString: Untagged
@@ -51429,21 +51429,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1305295746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2091689117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091689115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd122d6b3c3f7514593453ace8192317, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTag: Player
-  hintUI: {fileID: 313142422}
-  bookSceneName: LibroScene
 --- !u!61 &2091689118
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -51490,6 +51475,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.21, y: 1.64}
   m_EdgeRadius: 0
+--- !u!114 &2091689119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091689115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86126ca2d912faf498e21ef097a380b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: Player
+  hintUI: {fileID: 313142422}
+  bookSceneName: LibroScene
 --- !u!1 &2093621704
 GameObject:
   m_ObjectHideFlags: 0
