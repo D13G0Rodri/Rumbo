@@ -3,8 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class SceneAutoChanger : MonoBehaviour
 {
-    public void CambiarEscena(string nombreEscena)
+    [Header("Tiempo antes de cambiar de escena (segundos)")]
+    [Tooltip("Tiempo en segundos antes de cambiar de escena automáticamente")]
+    public float tiempoDeEspera = 15f;
+
+    private void Start()
     {
-        SceneManager.LoadScene(nombreEscena);
+        Invoke("CambiarEscena", tiempoDeEspera);
+    }
+
+    public void CambiarEscena(string scene)
+    {
+        SceneManager.LoadScene(scene);
     }
 }
