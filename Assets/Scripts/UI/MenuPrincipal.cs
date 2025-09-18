@@ -5,16 +5,21 @@ public class MenuPrincipal : MonoBehaviour
 {
     public void NuevaPartida()
     {
-        if (GameMemory.I != null)
-        {
-            GameMemory.I.ResetSavedPosition();
-        }
-        SceneManager.LoadScene("nacimiento");
+        SaveSystem.DeleteSave();
+        SceneManager.LoadScene("JuegoNacer");
     }
 
     public void ContinuarPartida()
     {
-        SceneManager.LoadScene("BebeGatea");
+        var data = SaveSystem.LoadPlayerData();
+        if (data != null && !string.IsNullOrEmpty(data.currentSceneName))
+        {
+            SceneManager.LoadScene(data.currentSceneName);
+        }
+        else
+        {
+            Debug.Log("No hay partida guardada o la escena guardada es inválida.");
+        }
     }
 
     public void Salir()
