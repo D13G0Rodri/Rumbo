@@ -42736,6 +42736,7 @@ MonoBehaviour:
   sceneChanger: {fileID: 0}
   panelDialogLadron: {fileID: 1995014060}
   panelDialogTv: {fileID: 1913408750}
+  interactionKey: 101
 --- !u!82 &502077903
 AudioSource:
   m_ObjectHideFlags: 0
@@ -49385,9 +49386,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e0225ac1323f248adf7a26cb2654cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelPrompt: {fileID: 100671963}
+  promptPanel: {fileID: 0}
   promptText: {fileID: 100671965}
-  mensaje: Presiona [Ctrl] para hablar
+  message: Press [E] to interact
   playerTag: Player
   audioSource: {fileID: 0}
   appearSound: {fileID: 0}
