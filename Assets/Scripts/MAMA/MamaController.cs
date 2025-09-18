@@ -31,7 +31,7 @@ public class MamaController : MonoBehaviour
     public void IrHaciaBebe()
     {
         moviendoHaciaBebe = true;
-        // animator.SetBool("isWalking", true); // Activa la animación de caminar
+        animator.SetBool("isWalking", true); // Activa la animación de caminar
         Debug.Log("¡La mamá va hacia el bebé!");
     }
 
@@ -39,15 +39,26 @@ public class MamaController : MonoBehaviour
     {
         if (bebe == null) return;
         
-        // Calcula la dirección hacia el bebé
-        Vector2 direccion = (bebe.position - transform.position).normalized;
+        // Calcula la dirección hacia el bebé solo en el eje horizontal
+        Vector2 direccion = new Vector2(bebe.position.x - transform.position.x, 0).normalized;
+
+        // Girar el sprite para que mire hacia el bebé
+        if (direccion.x > 0)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        else if (direccion.x < 0)
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        
         rb.linearVelocity = direccion * velocidadMovimiento;
 
         // Detenerse frente al bebé
-        if (Vector2.Distance(transform.position, bebe.position) < distanciaMinima)
+        if (Mathf.Abs(transform.position.x - bebe.position.x) < distanciaMinima)
         {
             rb.linearVelocity = Vector2.zero;
-            // animator.SetBool("isWalking", false); // Detiene la animación de caminar
+            animator.SetBool("isWalking", false); // Detiene la animación de caminar
             moviendoHaciaBebe = false;
             Debug.Log("YA LO TOCÓOOOOOOOOOOOOOOOOOO");
             // Guardar los datos del juego antes de cambiar de escena
