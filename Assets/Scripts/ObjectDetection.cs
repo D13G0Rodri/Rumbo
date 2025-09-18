@@ -92,7 +92,7 @@ public class ObjectDetection : MonoBehaviour
         if (panelDialogEnchufe.activeSelf && Input.GetKey(interactionKey))
         {
             animator.SetBool("isElectrocuted", true);
-            playerController.ReceiveDamage(0.5f);
+            playerController.ReceiveDamage(3f);
         }
 
         if (isNearToDoor == true && Input.GetKey(interactionKey))
