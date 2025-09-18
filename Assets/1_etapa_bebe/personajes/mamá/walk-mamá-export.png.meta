@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0e16b991f1144c04cacdd67023d31e46
+guid: f29679eb3a5cba3499f8d17f47be4f0e
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -111,6 +111,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -123,7 +136,7 @@ TextureImporter:
         width: 302
         height: 422
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -143,9 +156,9 @@ TextureImporter:
         x: 1289
         y: 29
         width: 272
-        height: 362
+        height: 422
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -165,9 +178,9 @@ TextureImporter:
         x: 2249
         y: 29
         width: 302
-        height: 392
+        height: 422
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -189,7 +202,7 @@ TextureImporter:
         width: 362
         height: 422
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -206,12 +219,12 @@ TextureImporter:
       name: "walk-mam\xE1-export_4"
       rect:
         serializedVersion: 2
-        x: 4139
+        x: 4146
         y: 29
         width: 362
-        height: 362
+        height: 422
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -231,9 +244,9 @@ TextureImporter:
         x: 5129
         y: 29
         width: 302
-        height: 392
+        height: 422
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -250,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: dde28e7b30c3b6e47a5e6dd69faa2363
     internalID: 0
     vertices: []
     indices: 
@@ -259,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "walk-mam\xE1-export_0": -1911482835185782497
+      "walk-mam\xE1-export_1": 1252693783420723043
+      "walk-mam\xE1-export_2": -5005342189741312873
+      "walk-mam\xE1-export_3": 914848547512377162
+      "walk-mam\xE1-export_4": 891087114743032158
+      "walk-mam\xE1-export_5": -2893212651434782292
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
