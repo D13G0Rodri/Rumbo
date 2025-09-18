@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c69aa4ba0d80d0c45836f11127322e1d
+guid: 2c979d4284891a044a82a19d21e16d09
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4826451604978798000
-    second: pantalla de preguntas simple_0
+      213: 2147085985362314869
+    second: carrito_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pantalla de preguntas simple_0
+      name: carrito_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2000
-        height: 1000
+        width: 140
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0bd0060c9200bf240800000000000000
-      internalID: 4826451604978798000
+      spriteID: 5768db3f35bfbcd10800000000000000
+      internalID: 2147085985362314869
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      pantalla de preguntas simple_0: 4826451604978798000
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

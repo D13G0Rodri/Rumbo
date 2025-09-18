@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      relleno-barra-tiempo_0: 6329053506731498554
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

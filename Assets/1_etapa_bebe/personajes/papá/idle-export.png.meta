@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: c69aa4ba0d80d0c45836f11127322e1d
+guid: f5b9ffffe04f94d49847703b0162a3c3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4826451604978798000
-    second: pantalla de preguntas simple_0
+      213: 2123858955771819400
+    second: idle-export_0
+  - first:
+      213: -6559602993303261894
+    second: idle-export_1
+  - first:
+      213: -4079218532914729457
+    second: idle-export_2
+  - first:
+      213: 3144191892767933364
+    second: idle-export_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pantalla de preguntas simple_0
+      name: idle-export_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 2000
-        height: 1000
+        x: 299
+        y: 29
+        width: 362
+        height: 392
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0bd0060c9200bf240800000000000000
-      internalID: 4826451604978798000
+      spriteID: 885bfc3b776797d10800000000000000
+      internalID: 2123858955771819400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: idle-export_1
+      rect:
+        serializedVersion: 2
+        x: 1259
+        y: 29
+        width: 362
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3de194f4db97f4a0800000000000000
+      internalID: -6559602993303261894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: idle-export_2
+      rect:
+        serializedVersion: 2
+        x: 2219
+        y: 29
+        width: 362
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0e6d606b54b367c0800000000000000
+      internalID: -4079218532914729457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: idle-export_3
+      rect:
+        serializedVersion: 2
+        x: 3179
+        y: 29
+        width: 362
+        height: 392
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b3881a2ed962ab20800000000000000
+      internalID: 3144191892767933364
       vertices: []
       indices: 
       edges: []
@@ -134,8 +209,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      pantalla de preguntas simple_0: 4826451604978798000
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
