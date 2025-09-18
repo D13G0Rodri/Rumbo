@@ -17,6 +17,7 @@ public class ObjectDetectionNiño : MonoBehaviour
 
     public GameObject panelDialogLadron;
     public GameObject panelDialogTv;
+    public KeyCode interactionKey = KeyCode.E;
     void Start()
     {
         // playerController = GetComponent<PlayerControllerBaby>();
@@ -61,11 +62,11 @@ public class ObjectDetectionNiño : MonoBehaviour
     void Update()
     {
 
-        if (isNearToThief == true && Input.GetKey(KeyCode.LeftControl))
+        if (isNearToThief == true && Input.GetKey(interactionKey))
         {
             panelDialogLadron.SetActive(true);
         }
-        if (isNearToTV == true && Input.GetKey(KeyCode.LeftControl))
+        if (isNearToTV == true && Input.GetKey(interactionKey))
         {
             sceneChanger.CambiarEscena("videoGame");
         }

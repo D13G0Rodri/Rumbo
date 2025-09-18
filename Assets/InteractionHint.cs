@@ -2,17 +2,17 @@ using UnityEngine;
 using TMPro;
 
 [RequireComponent(typeof(Collider2D))]
-public class ShowTalkPrompt : MonoBehaviour
+public class InteractionHint : MonoBehaviour
 {
-    [Header("UI compartida")]
-    public GameObject panelPrompt;   // GameObject que contiene el texto (ej: "Hablar [Ctrl]")
-    public TMP_Text promptText;      // Texto TMP dentro del panel
+    [Header("Shared UI")]
+    public GameObject promptPanel;
+    public TMP_Text promptText;
 
-    [Header("Mensaje de este objeto")]
-    [TextArea] public string mensaje = "Presiona [Ctrl] para hablar";
+    [Header("Message for this object")]
+    [TextArea] public string message = "Press [E] to interact";
     public string playerTag = "Player";
 
-    [Header("Audio (opcional)")]
+    [Header("Audio (optional)")]
     public AudioSource audioSource;
     public AudioClip appearSound;
     [Range(0f, 1f)] public float appearVolume = 0.5f;
@@ -20,19 +20,18 @@ public class ShowTalkPrompt : MonoBehaviour
     private void Reset()
     {
         var c = GetComponent<Collider2D>();
-        if (c) c.isTrigger = true; // aseguramos que sea trigger
+        if (c) c.isTrigger = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag(playerTag)) return;
 
-        if (promptText != null) promptText.text = mensaje;
+        if (promptText != null) promptText.text = message;
 
-        // Solo si estaba apagado, lo encendemos y reproducimos sonido
-        if (panelPrompt != null && !panelPrompt.activeSelf)
+        if (promptPanel != null && !promptPanel.activeSelf)
         {
-            panelPrompt.SetActive(true);
+            promptPanel.SetActive(true);
 
             if (audioSource != null && appearSound != null)
                 audioSource.PlayOneShot(appearSound, appearVolume);
@@ -42,7 +41,7 @@ public class ShowTalkPrompt : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag(playerTag)) return;
-        if (panelPrompt != null && panelPrompt.activeSelf)
-            panelPrompt.SetActive(false);
+        if (promptPanel != null && promptPanel.activeSelf)
+            promptPanel.SetActive(false);
     }
 }

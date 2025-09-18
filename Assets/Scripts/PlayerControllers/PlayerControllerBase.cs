@@ -86,6 +86,7 @@ public class PlayerControllerBase : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            isGrounded = false; // Previene saltos infinitos
             animator.SetBool("isGrounded", false);
         }
     }
@@ -177,8 +178,7 @@ public class PlayerControllerBase : MonoBehaviour
 
         PushableObject[] pushables = FindObjectsByType<PushableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (var obj in pushables)
-        {
-            if (!string.IsNullOrEmpty(obj.objectId))
+        {            if (!string.IsNullOrEmpty(obj.objectId))
             {
                                 data.pushableObjectPositions[obj.objectId] = new SerializableVector3(obj.transform.position);
             }

@@ -12,6 +12,8 @@ public class ObjectDetection : MonoBehaviour
     private bool isNearToDoor = false;
     private bool isNearToBed = false;
     private bool isNearToBottle = false;
+    public KeyCode interactionKey = KeyCode.E;
+
 
     private bool isNearToBath = false;
     void Start()
@@ -87,17 +89,17 @@ public class ObjectDetection : MonoBehaviour
 
     void Update()
     {
-        if (panelDialogEnchufe.activeSelf && Input.GetKey(KeyCode.LeftControl))
+        if (panelDialogEnchufe.activeSelf && Input.GetKey(interactionKey))
         {
             animator.SetBool("isElectrocuted", true);
             playerController.ReceiveDamage(0.5f);
         }
 
-        if (isNearToDoor == true && Input.GetKey(KeyCode.LeftControl))
+        if (isNearToDoor == true && Input.GetKey(interactionKey))
         {
             sceneChanger.CambiarEscena("evento-raptado");
         }
-        if (!hasTransitioned && isNearToBed == true && Input.GetKey(KeyCode.LeftControl) && timerVida.timerCount >= timerVida.maxTime)
+        if (!hasTransitioned && isNearToBed == true && Input.GetKey(interactionKey) && timerVida.timerCount >= timerVida.maxTime)
         {
             // Guardar explícitamente antes de pasar al video intermedio
             if (playerController != null)
@@ -108,11 +110,11 @@ public class ObjectDetection : MonoBehaviour
             hasTransitioned = true;
             sceneChanger.CambiarEscena("bebe-niño");
         }
-        if (isNearToBottle == true && Input.GetKey(KeyCode.LeftControl))
+        if (isNearToBottle == true && Input.GetKey(interactionKey))
         {
             sceneChanger.CambiarEscena("envenenado");
         }
-        if (isNearToBath == true && Input.GetKey(KeyCode.LeftControl))
+        if (isNearToBath == true && Input.GetKey(interactionKey))
         {
             sceneChanger.CambiarEscena("ahogado");
         }

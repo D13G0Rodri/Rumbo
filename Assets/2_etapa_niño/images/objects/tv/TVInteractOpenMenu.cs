@@ -19,12 +19,11 @@ public class TVInteractOpenMenu : MonoBehaviour
         {
             if (Input.GetKeyDown(interactKey))
             {
-                // Guardar la posición actual del jugador
-                if (jugador != null)
+                // Guardar un checkpoint usando el sistema de guardado principal
+                PlayerControllerBase playerController = jugador.GetComponent<PlayerControllerBase>();
+                if (playerController != null)
                 {
-                    ReturnPoint.playerPos = jugador.position;
-                    ReturnPoint.sceneName = SceneManager.GetActiveScene().name;
-                    ReturnPoint.hasData = true;
+                    playerController.SaveCheckpoint();
                 }
 
                 // Cargar la nueva escena
