@@ -13,5 +13,9 @@ public class GameMemory : MonoBehaviour
         if (I != null && I != this) { Destroy(gameObject); return; }
         I = this;
         DontDestroyOnLoad(gameObject); // NO se destruye al cambiar de escena
+    public void ResetSavedPosition()
+    {
+        savedPosition = Vector3.zero;
+        hasSavedPosition = false;
     }
 }

@@ -3,9 +3,18 @@ using UnityEngine.SceneManagement;
 
 public class MenuPrincipal : MonoBehaviour
 {
-    public void Jugar()
+    public void NuevaPartida()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (GameMemory.I != null)
+        {
+            GameMemory.I.ResetSavedPosition();
+        }
+        SceneManager.LoadScene("nacimiento");
+    }
+
+    public void ContinuarPartida()
+    {
+        SceneManager.LoadScene("BebeGatea");
     }
 
     public void Salir()
