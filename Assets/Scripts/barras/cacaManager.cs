@@ -8,7 +8,7 @@ public class CacaManager : MonoBehaviour
     [Tooltip("Tiempo en segundos para que la barra de incomodidad se llene y aplique daño")]
     public float tiempoLimiteLimpieza = 20f;
     [Tooltip("Cantidad de daño por ciclo cuando no se limpia")]
-    [Range(0f, 10f)] public float danioPorCiclo = 0.1f;
+    [Range(0f, 10f)] public float danioPorCiclo = 1f;
 
     [Header("Referencias UI")]
     [Tooltip("Asigna la imagen de la barra de caca aquí")]
