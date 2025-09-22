@@ -12,7 +12,7 @@ public class TVMenuController : MonoBehaviour
     [SerializeField] private float documentalIntelligenceDelta = 1f;   // inteligencia +1
     [SerializeField] private float documentalHappinessDelta   = -5f;  // felicidad -5
 
-    [SerializeField] private float jugarIntelligenceDelta     = -1f;  // inteligencia -1
+    [SerializeField] private float jugarIntelligenceDelta     = -2f;  // inteligencia -0.5
     [SerializeField] private float jugarHappinessDelta        = 15f;  // felicidad +15
 
     public void ElegirDocumental() // botón VERDE

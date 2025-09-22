@@ -159,28 +159,32 @@ public class PlayerControllerBase : MonoBehaviour
 
     public void SaveCheckpoint(bool orderingAchievement = false)
     {
-        PlayerData existingData = SaveSystem.LoadPlayerData();
-        bool previousAchievementState = existingData?.hasOrderingAchievement ?? false;
+        PlayerData data = SaveSystem.LoadPlayerData() ?? new PlayerData();
 
-        PlayerData data = new PlayerData
+        // Actualizar los datos del jugador con el estado actual
+        data.health = this.health;
+        data.position = new float[] { transform.position.x, transform.position.y, transform.position.z };
+        data.intelligence = this.intelligence;
+        data.concentration = this.concentration;
+        data.hunger = this.hunger;
+        data.bathroom = this.bathroom;
+        data.currentSceneName = SceneManager.GetActiveScene().name;
+        data.timerCount = (FindFirstObjectByType<TimerVida>() != null) ? FindFirstObjectByType<TimerVida>().timerCount : this.timerCount;
+        data.hasOrderingAchievement = orderingAchievement || data.hasOrderingAchievement;
+        data.presentationPanelShown = this.presentationPanelShown;
+
+        // Inicializar el diccionario de posiciones si es nulo
+        if (data.pushableObjectPositions == null)
         {
-            health = this.health,
-            position = new float[] { transform.position.x, transform.position.y, transform.position.z },
-            intelligence = this.intelligence,
-            concentration = this.concentration,
-            hunger = this.hunger,
-            bathroom = this.bathroom,
-            currentSceneName = SceneManager.GetActiveScene().name,
-            timerCount = (FindFirstObjectByType<TimerVida>() != null) ? FindFirstObjectByType<TimerVida>().timerCount : this.timerCount,
-            hasOrderingAchievement = orderingAchievement || previousAchievementState,
-            presentationPanelShown = this.presentationPanelShown
-        };
+            data.pushableObjectPositions = new SerializableDictionary<string, SerializableVector3>();
+        }
 
         PushableObject[] pushables = FindObjectsByType<PushableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (var obj in pushables)
-        {            if (!string.IsNullOrEmpty(obj.objectId))
+        {            
+            if (!string.IsNullOrEmpty(obj.objectId))
             {
-                                data.pushableObjectPositions[obj.objectId] = new SerializableVector3(obj.transform.position);
+                data.pushableObjectPositions[obj.objectId] = new SerializableVector3(obj.transform.position);
             }
         }
 
@@ -214,7 +218,15 @@ public class PlayerControllerBase : MonoBehaviour
         if (data != null)
         {
             health = data.health;
-            transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+            if (data.position != null && data.position.Length >= 3)
+            {
+                transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+            }
+            else
+            {
+                Debug.LogWarning("Datos de posición inválidos o nulos en el archivo de guardado.");
+            }
+
             intelligence = data.intelligence;
             concentration = data.concentration;
             hunger = data.hunger;
@@ -229,9 +241,11 @@ public class PlayerControllerBase : MonoBehaviour
                 PushableObject[] pushables = FindObjectsByType<PushableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
                 foreach (var obj in pushables)
                 {
-                                        if (!string.IsNullOrEmpty(obj.objectId) && data.pushableObjectPositions.ContainsKey(obj.objectId))
+                    if (obj == null || string.IsNullOrEmpty(obj.objectId))
+                        continue;
+
+                    if (data.pushableObjectPositions.TryGetValue(obj.objectId, out SerializableVector3 pos))
                     {
-                        SerializableVector3 pos = data.pushableObjectPositions[obj.objectId];
                         obj.transform.position = pos.ToVector3();
                     }
                 }

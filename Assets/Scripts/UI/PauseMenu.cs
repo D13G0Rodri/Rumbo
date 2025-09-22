@@ -35,8 +35,8 @@ public class PauseMenu : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
         if (pausePanel != null) pausePanel.SetActive(true);
-    
-  
+
+
     }
 
     public void Resume()
@@ -45,7 +45,7 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         if (pausePanel != null) pausePanel.SetActive(false);
-        
+
     }
 
     // Reinicia todo como si el juego empezara de nuevo
@@ -79,6 +79,10 @@ public class PauseMenu : MonoBehaviour
             var idx = 0;
             SceneManager.LoadScene(idx);
         }
+    }
+    public void Salir()
+    {
+        SceneManager.LoadScene("MenuPrincipal");
     }
 }
 

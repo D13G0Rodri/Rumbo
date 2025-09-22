@@ -25,16 +25,23 @@ public class ObjectDetectionNiño : MonoBehaviour
 
         // randomEvent = FindFirstObjectByType<RandomEvent>();
 
-        panelDialogLadron.SetActive(false);
-        panelDialogTv.SetActive(false);
+        if (panelDialogLadron != null)
+            panelDialogLadron.SetActive(false);
+        else
+            Debug.LogWarning("Panel de diálogo del ladrón no asignado.");
+
+        if (panelDialogTv != null)
+            panelDialogTv.SetActive(false);
+        else
+            Debug.LogWarning("Panel de diálogo de la TV no asignado.");
 
         sceneChanger = FindFirstObjectByType<SceneAutoChanger>();
+        if (sceneChanger == null)
+            Debug.LogWarning("SceneAutoChanger no encontrado en la escena.");
     }
 
     void OnTriggerEnter2D(Collider2D Collision)
     {
-
-
         if (Collision.CompareTag("Ladron"))
         {
             isNearToThief = true;
@@ -42,9 +49,11 @@ public class ObjectDetectionNiño : MonoBehaviour
         if (Collision.CompareTag("Obj_TV"))
         {
             isNearToTV = true;
-            panelDialogTv.SetActive(true);
+            if (panelDialogTv != null)
+                panelDialogTv.SetActive(true);
         }
     }
+
     void OnTriggerExit2D(Collider2D Collision)
     {
         if (Collision.CompareTag("Ladron"))
@@ -54,21 +63,25 @@ public class ObjectDetectionNiño : MonoBehaviour
         if (Collision.CompareTag("Obj_TV"))
         {
             isNearToTV = false;
-            panelDialogTv.SetActive(false);
+            if (panelDialogTv != null)
+                panelDialogTv.SetActive(false);
         }
     }
 
-
     void Update()
     {
-
-        if (isNearToThief == true && Input.GetKey(interactionKey))
+        if (isNearToThief && Input.GetKey(interactionKey))
         {
-            panelDialogLadron.SetActive(true);
+            if (panelDialogLadron != null)
+                panelDialogLadron.SetActive(true);
         }
-        if (isNearToTV == true && Input.GetKey(interactionKey))
+
+        if (isNearToTV && Input.GetKey(interactionKey))
         {
-            sceneChanger.CambiarEscena("videoGame");
+            if (sceneChanger != null)
+                sceneChanger.CambiarEscena("videoGame");
+            else
+                Debug.LogError("SceneAutoChanger no está disponible para cambiar de escena.");
         }
     }
 
