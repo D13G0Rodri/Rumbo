@@ -123,7 +123,7 @@ public class NacimientoScript : MonoBehaviour
         }
         else if (successes == failed)
         {
-            keyToPress.text = "Sobreviviste... a qué costo";
+            keyToPress.text = "Sobreviviste... a que costo";
             duracion = audioManager?.ReproducirVictoria() ?? 1f;
             StartCoroutine(CambiarEscenaDespues(duracion, 1));
         }
