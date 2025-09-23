@@ -43,15 +43,30 @@ public class PlayerData
     public bool presentationPanelShown;
 
     // Datos del Niño
-    public float karma;
+
     public float intelligence;
+    public float karma;
     public float happiness;
     public float concentration;
     public float energy;
 
     public PlayerData()
     {
+        // Inicialización de objetos empujables
         pushableObjectPositions = new SerializableDictionary<string, SerializableVector3>();
+
+        // Valores iniciales del niño
+        intelligence = 20f;
+        karma = 50f;
+        happiness = 50f;
+
+        // Valores por defecto para los demás campos
+        health = 100f;
+        position = new float[] { 0f, 0f, 0f };
+        hunger = 100f;
+        bathroom = 100f;
+        concentration = 100f;
+        energy = 100f;
     }
 }
 

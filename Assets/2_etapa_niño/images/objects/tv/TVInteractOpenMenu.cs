@@ -8,7 +8,9 @@ public class TVInteractOpenMenu : MonoBehaviour
 
     [Header("Configuración de Interacción")]
     [SerializeField] private KeyCode interactKey = KeyCode.E; 
-    // <-- Puedes elegir cualquier tecla desde el Inspector
+
+    [Header("Panel de Mensaje")]
+    [SerializeField] private GameObject mensajePanel; // Arrastra aquí tu panel de mensaje
 
     private bool enZona = false;
 
@@ -27,37 +29,47 @@ public class TVInteractOpenMenu : MonoBehaviour
                 Debug.LogError("No se pudo encontrar al jugador. Asegúrate de que el objeto del jugador tenga el tag 'Player'.");
             }
         }
+
+        // Asegúrate de que el panel esté oculto al inicio
+        if (mensajePanel != null)
+            mensajePanel.SetActive(false);
     }
 
     void Update()
     {
-        // Solo si el jugador está dentro de la zona invisible
-        if (enZona)
+        if (enZona && Input.GetKeyDown(interactKey) && jugador != null)
         {
-            if (Input.GetKeyDown(interactKey) && jugador != null)
+            PlayerControllerBase playerController = jugador.GetComponent<PlayerControllerBase>();
+            if (playerController != null)
             {
-                // Guardar un checkpoint usando el sistema de guardado principal
-                PlayerControllerBase playerController = jugador.GetComponent<PlayerControllerBase>();
-                if (playerController != null)
-                {
-                    playerController.SaveCheckpoint();
-                }
-
-                // Cargar la nueva escena
-                SceneManager.LoadScene(menuSceneName);
+                playerController.SaveCheckpoint();
             }
+
+            SceneManager.LoadScene(menuSceneName);
         }
     }
 
-    // Cuando el jugador entra al área
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) enZona = true;
+        if (other.CompareTag("Player"))
+        {
+            enZona = true;
+
+            // Mostrar el panel cuando el jugador entre
+            if (mensajePanel != null)
+                mensajePanel.SetActive(true);
+        }
     }
 
-    // Cuando el jugador sale del área
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) enZona = false;
+        if (other.CompareTag("Player"))
+        {
+            enZona = false;
+
+            // Ocultar el panel cuando el jugador salga
+            if (mensajePanel != null)
+                mensajePanel.SetActive(false);
+        }
     }
 }

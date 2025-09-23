@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections; // Necesario para usar Corrutinas
 
 /// <summary>
@@ -14,10 +15,10 @@ public class GamePresentationController : MonoBehaviour
     [Tooltip("Referencia al script TimerVida que controla el tiempo del juego.")]
     public TimerVida timerVida;
 
-    private const float activationPercentage = 0.5f; // El panel se activa al 50% del tiempo
+    [Tooltip("Botón que cierra el panel.")]
+    public Button btnCerrar; // Nuevo: botón que cierra el panel
 
-    [Tooltip("El tiempo en segundos que el panel permanecerá visible antes de desaparecer.")]
-    public float panelDisplayDuration = 4f; // Nueva variable para el tiempo de visualización
+    private const float activationPercentage = 0.5f; // El panel se activa al 50% del tiempo
 
     private PushableObject[] pushableObjects;
     private bool hasActivated = false;
@@ -26,7 +27,7 @@ public class GamePresentationController : MonoBehaviour
     void Start()
     {
         // 1. Encontrar todos los objetos que se pueden empujar en la escena.
-                pushableObjects = FindObjectsByType<PushableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None); // Método moderno para incluir objetos inactivos
+        pushableObjects = FindObjectsByType<PushableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None); // Método moderno para incluir objetos inactivos
 
         // 2. Desactivar cada script PushableObject individualmente.
         foreach (var obj in pushableObjects)
@@ -65,6 +66,16 @@ public class GamePresentationController : MonoBehaviour
         {
             Debug.LogWarning("No se encontró PlayerControllerBase en la escena. El estado de presentación no se puede sincronizar.");
         }
+
+        // 6. Configurar el botón para cerrar el panel (solo si está asignado)
+        if (btnCerrar != null)
+        {
+            btnCerrar.onClick.AddListener(() =>
+            {
+                if (presentationPanel != null)
+                    presentationPanel.SetActive(false);
+            });
+        }
     }
 
     void Update()
@@ -81,10 +92,10 @@ public class GamePresentationController : MonoBehaviour
         // Comprobar si hemos alcanzado o superado el porcentaje de activación.
         if (currentPercentage >= activationPercentage)
         {
-            // Iniciar la secuencia de mostrar y ocultar el panel.
+            // Activar el panel (sin corrutina)
             if (presentationPanel != null)
             {
-                StartCoroutine(ShowAndHidePanelRoutine());
+                presentationPanel.SetActive(true);
             }
 
             // Reactivar todos los scripts de los objetos empujables.
@@ -105,20 +116,5 @@ public class GamePresentationController : MonoBehaviour
 
             Debug.Log($"Presentación activada al {currentPercentage:P1}. Objetos empujables habilitados.");
         }
-    }
-
-    /// <summary>
-    /// Corrutina que activa el panel, espera un tiempo y luego lo desactiva.
-    /// </summary>
-    private IEnumerator ShowAndHidePanelRoutine()
-    {
-        // 1. Activar el panel.
-        presentationPanel.SetActive(true);
-
-        // 2. Esperar el tiempo especificado en la variable pública.
-        yield return new WaitForSeconds(panelDisplayDuration);
-
-        // 3. Desactivar el panel.
-        presentationPanel.SetActive(false);
     }
 }

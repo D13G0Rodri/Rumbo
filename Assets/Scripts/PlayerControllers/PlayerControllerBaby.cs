@@ -5,11 +5,25 @@ public class PlayerControllerBaby : PlayerControllerBase
 {
     // No necesitamos re-declarar danioPorCiclo aquí si el daño lo gestiona el evento.
 
+    [Header("Spawn Point")]
+    public Transform spawnPoint; // Arrastra aquí el BabySpawnPoint desde el Inspector
+
     protected override void Start()
     {
-        // CAMBIO: Eliminamos la llamada duplicada a LoadGame.
-        // base.Start() se encargará de todo el proceso de inicialización y carga.
         base.Start();
+
+        // Esto asegura que la física esté activa al cargar la escena
+        Time.timeScale = 1f; // Desbloquea el tiempo si venías de pausa
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false; // Activa la física del bebé
+        }
+
+        // --- NUEVO: poner al bebé en el spawn ---
+        if (spawnPoint != null)
+            transform.position = spawnPoint.position;
     }
 
     protected override void Update()
@@ -33,12 +47,11 @@ public class PlayerControllerBaby : PlayerControllerBase
         ReceiveDamage(damageAmount); // Reutilizamos la función de daño base.
         Debug.Log($"¡Daño por falta de limpieza! Vida: {health}");
     }
+
     public void ModificateState()
     {
         animator.SetBool("isElectrocuted", false);
     }
-
-
 
     // CAMBIO: Sobrescribimos el método para crear datos, en lugar de todo el SaveGame.
     protected override PlayerData CreatePlayerData()

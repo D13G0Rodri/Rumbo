@@ -1287,7 +1287,7 @@ MonoBehaviour:
   sfxSource: {fileID: 2131228708}
   acierto: {fileID: 8300000, guid: 88118731e93f2944891eaf0817bad3e6, type: 3}
   fallo: {fileID: 8300000, guid: bab8b8cfa7e62894188f7c9672b57d9d, type: 3}
-  victoria: {fileID: 8300000, guid: e5045bd504a7bbf448aa7e86878ef02d, type: 3}
+  victoria: {fileID: 8300000, guid: b2c8e1ad42668624da09df949837eadd, type: 3}
   derrota: {fileID: 8300000, guid: 4bc00cbb38b6a884eab32b27721000fc, type: 3}
 --- !u!82 &2131228708
 AudioSource:
