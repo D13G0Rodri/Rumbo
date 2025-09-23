@@ -82,7 +82,24 @@ public class PauseMenu : MonoBehaviour
     }
     public void Salir()
     {
+        // Registrar que ya entró a BebeGatea
+        PlayerPrefs.SetInt("BebeGatea_FirstTime", 1);
+        PlayerPrefs.Save();
+
+        // Crear PlayerData correctamente
+        PlayerData data = new PlayerData();
+        data.currentSceneName = SceneManager.GetActiveScene().name;
+        data.health = 100;       // valor por defecto
+        data.timerCount = 0f;    // valor por defecto
+        data.position = new float[3] { 0f, 0f, 0f }; // importante: no null
+
+        // Guardar usando SaveSystem
+        SaveSystem.SavePlayerData(data);
+
+        // Cargar menú principal
         SceneManager.LoadScene("MenuPrincipal");
     }
+
+
 }
 
