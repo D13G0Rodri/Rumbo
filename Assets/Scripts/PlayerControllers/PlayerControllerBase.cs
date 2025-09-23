@@ -86,7 +86,7 @@ public class PlayerControllerBase : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            isGrounded = false; // Previene saltos infinitos
+            isGrounded = false;
             animator.SetBool("isGrounded", false);
         }
     }
@@ -147,7 +147,13 @@ public class PlayerControllerBase : MonoBehaviour
 
     protected virtual void AddStageSpecificData(PlayerData data)
     {
-        // Las clases hijas (Child, Teen) sobrescribirán este método.
+        // Las clases hijas sobrescribirán este método
+    }
+
+    // --- NUEVO: Método público para exponer AddStageSpecificData ---
+    public void ApplyStageSpecificData(PlayerData data)
+    {
+        AddStageSpecificData(data);
     }
 
     public void SaveGame()
@@ -161,7 +167,6 @@ public class PlayerControllerBase : MonoBehaviour
     {
         PlayerData data = SaveSystem.LoadPlayerData() ?? new PlayerData();
 
-        // Actualizar los datos del jugador con el estado actual
         data.health = this.health;
         data.position = new float[] { transform.position.x, transform.position.y, transform.position.z };
         data.intelligence = this.intelligence;
@@ -173,15 +178,12 @@ public class PlayerControllerBase : MonoBehaviour
         data.hasOrderingAchievement = orderingAchievement || data.hasOrderingAchievement;
         data.presentationPanelShown = this.presentationPanelShown;
 
-        // Inicializar el diccionario de posiciones si es nulo
         if (data.pushableObjectPositions == null)
-        {
             data.pushableObjectPositions = new SerializableDictionary<string, SerializableVector3>();
-        }
 
         PushableObject[] pushables = FindObjectsByType<PushableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (var obj in pushables)
-        {            
+        {
             if (!string.IsNullOrEmpty(obj.objectId))
             {
                 data.pushableObjectPositions[obj.objectId] = new SerializableVector3(obj.transform.position);
@@ -207,7 +209,7 @@ public class PlayerControllerBase : MonoBehaviour
             timerCount = (FindFirstObjectByType<TimerVida>() != null) ? FindFirstObjectByType<TimerVida>().timerCount : this.timerCount,
             presentationPanelShown = this.presentationPanelShown
         };
-        
+
         AddStageSpecificData(data);
         return data;
     }
@@ -219,19 +221,19 @@ public class PlayerControllerBase : MonoBehaviour
         {
             health = data.health;
             if (data.position != null && data.position.Length >= 3)
-            {
                 transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
-            }
             else
-            {
                 Debug.LogWarning("Datos de posición inválidos o nulos en el archivo de guardado.");
-            }
 
             intelligence = data.intelligence;
             concentration = data.concentration;
             hunger = data.hunger;
             bathroom = data.bathroom;
             timerCount = data.timerCount;
+            TimerVida timer = FindFirstObjectByType<TimerVida>();
+            if (timer != null)
+                timer.timerCount = data.timerCount;
+
             presentationPanelShown = data.presentationPanelShown;
 
             AddStageSpecificData(data);
@@ -245,9 +247,7 @@ public class PlayerControllerBase : MonoBehaviour
                         continue;
 
                     if (data.pushableObjectPositions.TryGetValue(obj.objectId, out SerializableVector3 pos))
-                    {
                         obj.transform.position = pos.ToVector3();
-                    }
                 }
             }
 

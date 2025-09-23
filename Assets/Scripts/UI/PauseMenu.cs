@@ -7,17 +7,17 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [Header("UI Opcional")]
-    [Tooltip("Panel que se muestra cuando el juego está en pausa")] public GameObject pausePanel;
+    [Tooltip("Panel que se muestra cuando el juego está en pausa")]
+    public GameObject pausePanel;
 
     [Header("Configuración de escena inicial")]
     [Tooltip("Nombre de la escena a cargar cuando se reinicie desde cero. Si está vacío, usará la buildIndex 0.")]
-    public string initialSceneName = ""; // Puedes definir aquí, o dejar vacío para usar la primera escena del build.
+    public string initialSceneName = "";
 
     private bool isPaused;
 
     void Awake()
     {
-        // Asegúrate de no heredar un timeScale pausado si entras a una escena desde otra
         Time.timeScale = 1f;
         if (pausePanel != null) pausePanel.SetActive(false);
         isPaused = false;
@@ -35,8 +35,6 @@ public class PauseMenu : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
         if (pausePanel != null) pausePanel.SetActive(true);
-
-
     }
 
     public void Resume()
@@ -45,61 +43,89 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         if (pausePanel != null) pausePanel.SetActive(false);
-
     }
 
     // Reinicia todo como si el juego empezara de nuevo
     public void ReiniciarDesdeCero()
     {
-        // Asegura que el tiempo siga corriendo tras el reinicio
         Time.timeScale = 1f;
 
-        // Limpia preferencias simples
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
 
-        // Borra archivo(s) de guardado si se usa SaveSystem
         try
         {
             SaveSystem.DeleteSave();
         }
-        catch { /* Si no existe, continuar sin errores */ }
+        catch { }
 
-        // Opcional: si tienes sistemas estáticos/singletons, restablécelos aquí
-        // e.g., AudioManager.Reset(), GlobalState.Clear(), etc.
-
-        // Cargar escena inicial
         if (!string.IsNullOrEmpty(initialSceneName))
         {
             SceneManager.LoadScene(initialSceneName);
         }
         else
         {
-            // Usa la primera escena del Build Settings
-            var idx = 0;
-            SceneManager.LoadScene(idx);
+            SceneManager.LoadScene(0);
         }
     }
+
     public void Salir()
     {
-        // Registrar que ya entró a BebeGatea
         PlayerPrefs.SetInt("BebeGatea_FirstTime", 1);
         PlayerPrefs.Save();
 
-        // Crear PlayerData correctamente
-        PlayerData data = new PlayerData();
-        data.currentSceneName = SceneManager.GetActiveScene().name;
-        data.health = 100;       // valor por defecto
-        data.timerCount = 0f;    // valor por defecto
-        data.position = new float[3] { 0f, 0f, 0f }; // importante: no null
+        // Buscar cualquier jugador que herede de PlayerControllerBase
+        PlayerControllerBase player = FindFirstObjectByType<PlayerControllerBase>();
+        if (player == null)
+        {
+            Debug.LogWarning("No se encontró ningún PlayerControllerBase en la escena. Se creará un guardado vacío.");
+        }
 
-        // Guardar usando SaveSystem
+        // Cargar datos existentes o crear nuevos
+        PlayerData data = SaveSystem.LoadPlayerData() ?? new PlayerData();
+
+        if (player != null)
+        {
+            // --- DATOS DEL JUGADOR ---
+            data.health = player.health;
+            data.position = new float[] { player.transform.position.x, player.transform.position.y, player.transform.position.z };
+            data.intelligence = player.intelligence;
+            data.concentration = player.concentration;
+            data.hunger = player.hunger;
+            data.bathroom = player.bathroom;
+            TimerVida timer = FindFirstObjectByType<TimerVida>();
+            data.timerCount = (timer != null) ? timer.timerCount : player.timerCount;
+
+            data.presentationPanelShown = player.presentationPanelShown;
+
+            // Llamar a AddStageSpecificData para guardar cualquier dato específico de la etapa
+            player.ApplyStageSpecificData(data);
+        }
+
+        // Guardar la escena actual
+        data.currentSceneName = SceneManager.GetActiveScene().name;
+
+        // --- POSICIONES DE OBJETOS EMPUJABLES ---
+        var pushables = FindObjectsByType<PushableObject>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None
+        );
+        foreach (var obj in pushables)
+        {
+            if (obj == null || string.IsNullOrEmpty(obj.objectId))
+                continue;
+
+            SerializableVector3 pos = new SerializableVector3(obj.transform.position);
+            if (data.pushableObjectPositions.ContainsKey(obj.objectId))
+                data.pushableObjectPositions[obj.objectId] = pos;
+            else
+                data.pushableObjectPositions.Add(obj.objectId, pos);
+        }
+
+        // Guardar datos completos
         SaveSystem.SavePlayerData(data);
 
-        // Cargar menú principal
+        // Cambiar a menú principal
         SceneManager.LoadScene("MenuPrincipal");
     }
-
-
 }
-
