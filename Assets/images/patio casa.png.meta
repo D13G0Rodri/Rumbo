@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      patio casa_0: -2551429925809751233
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
